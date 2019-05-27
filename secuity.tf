@@ -14,5 +14,19 @@ resource "azurerm_network_security_group" "sg" {
       source_address_prefix      = "*"
       destination_address_prefix = "*"
   }
+
+  
+  security_rule {
+      name                       = "HTTPS-UI"
+      priority                   = 1000
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "8443"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+  }
+
   tags               = merge({Name = "${var.net-name}" }, var.common-tags)
 }

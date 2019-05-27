@@ -38,10 +38,10 @@ resource "azurerm_network_interface" "nic" {
   tags                      = merge({Name = "${var.net-name}" }, var.common-tags)
 
   ip_configuration {
-      name                          = "${var.net-name}-${count.index}"
-      subnet_id                     = "${element(azurerm_subnet.subnet.*.id, count.index)}"
-      private_ip_address_allocation = "Dynamic"
-      public_ip_address_id          = "${element(azurerm_public_ip.fixedip.*.id, count.index)}"
+      name                                    = "${var.net-name}-${count.index}"
+      subnet_id                               = "${element(azurerm_subnet.subnet.*.id, count.index)}"
+      private_ip_address_allocation           = "Dynamic"
+      public_ip_address_id                    = "${element(azurerm_public_ip.fixedip.*.id, count.index)}"
   }
 
 }
