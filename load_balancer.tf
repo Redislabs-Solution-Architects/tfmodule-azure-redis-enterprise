@@ -46,14 +46,25 @@ resource "azurerm_lb_probe" "db-10002" {
   number_of_probes    = 2
 }
 
-resource "azurerm_lb_nat_rule" "azlb" {
+resource "azurerm_lb_nat_rule" "azlb-https-ui" {
   count                          = var.node-count
   resource_group_name            = "${azurerm_resource_group.resource.name}"
   loadbalancer_id                = "${azurerm_lb.redislb.id}"
-  name                           = "VM-${count.index}"
+  name                           = "HTTPS-UI-${count.index}"
   protocol                       = "tcp"
   frontend_port                  = "5000${count.index + 1}"
   backend_port                   = 8443
+  frontend_ip_configuration_name = "PublicIPAddress-${var.net-name}"
+}
+
+resource "azurerm_lb_nat_rule" "azlb-vm-ssh" {
+  count                          = var.node-count
+  resource_group_name            = "${azurerm_resource_group.resource.name}"
+  loadbalancer_id                = "${azurerm_lb.redislb.id}"
+  name                           = "VM-SSH-${count.index}"
+  protocol                       = "tcp"
+  frontend_port                  = "5010${count.index + 1}"
+  backend_port                   = 22
   frontend_ip_configuration_name = "PublicIPAddress-${var.net-name}"
 }
 
