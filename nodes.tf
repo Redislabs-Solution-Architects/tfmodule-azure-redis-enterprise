@@ -7,36 +7,36 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   vm_size               = var.node-size
 
   storage_os_disk {
-      name              = "${var.net-name}-${count.index}"
-      caching           = "ReadWrite"
-      create_option     = "FromImage"
-      managed_disk_type = "Premium_LRS"
+    name              = "${var.net-name}-${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Premium_LRS"
   }
 
   storage_image_reference {
-      publisher = var.node-publisher
-      offer     = var.node-offer
-      sku       = var.node-sku
-      version   = var.node-version
+    publisher = var.node-publisher
+    offer     = var.node-offer
+    sku       = var.node-sku
+    version   = var.node-version
   }
 
   os_profile {
-      computer_name  = "${var.net-name}-${count.index}"
-      admin_username = var.ssh-user
+    computer_name  = "${var.net-name}-${count.index}"
+    admin_username = var.ssh-user
   }
 
   os_profile_linux_config {
-      disable_password_authentication = true
-      ssh_keys {
-          path     = "/home/${var.ssh-user}/.ssh/authorized_keys"
-          key_data = "${file(var.ssh-key)}"
-      }
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/${var.ssh-user}/.ssh/authorized_keys"
+      key_data = "${file(var.ssh-key)}"
+    }
   }
 
-#    boot_diagnostics {
-#        enabled     = "true"
-#        storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
-#    }
+  #    boot_diagnostics {
+  #        enabled     = "true"
+  #        storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
+  #    }
 
-  tags                      = merge({Name = "${var.net-name}-${count.index}" }, var.common-tags)
+  tags = merge({ Name = "${var.net-name}-${count.index}" }, var.common-tags)
 }
