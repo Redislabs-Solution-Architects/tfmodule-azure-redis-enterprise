@@ -40,5 +40,30 @@ resource "azurerm_network_security_group" "sg" {
     destination_address_prefix = "*"
   }
 
+  security_rule {
+    name                       = "DB-10001"
+    priority                   = 1004
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "10001"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "DB-Sentinel"
+    priority                   = 1006
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "8001"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
   tags = merge({ Name = "${var.net-name}" }, var.common-tags)
+
 }
