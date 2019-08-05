@@ -64,3 +64,8 @@ variable "ssh-key" {
   description = "The SSH Public Key path"
   default     = "~/.ssh/id_rsa_redis.pub"
 }
+
+variable "re-download-url" {
+  description = "The download link for the redis enterprise software"
+  default     = null
+}

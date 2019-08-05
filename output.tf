@@ -5,3 +5,8 @@ output "node-ssh" {
 output "lb-ip" {
   value = azurerm_public_ip.lbip.ip_address
 }
+
+output "ui-links" {
+  value = formatlist("https://%s:8443/", azurerm_public_ip.fixedip.*.ip_address)
+}
+
