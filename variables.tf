@@ -62,7 +62,7 @@ variable "ssh-user" {
 
 variable "ssh-key" {
   description = "The SSH Public Key path"
-  default     = "~/.ssh/id_rsa_redis.pub"
+  default     = "~/.ssh/id_rsa_azure.pub"
 }
 
 variable "re-download-url" {

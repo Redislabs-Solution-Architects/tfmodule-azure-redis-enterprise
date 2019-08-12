@@ -13,6 +13,6 @@ resource "null_resource" "remote-config" {
       private_key = file(replace(var.ssh-key, ".pub", ""))
       agent       = true
     }
-    inline = ["cd /var/tmp && wget ${var.re-download-url}"]
+    inline = ["cd /var/tmp && wget ${var.re-download-url} && tar -xvf redislabs*.tar"]
   }
 }
