@@ -21,7 +21,6 @@ resource "null_resource" "remote-config" {
 }
 
 # TODO: If statement so the first node does a cluster create, each additional node does a cluster join?
-
 resource "null_resource" "cluster-config" {
     provisioner "remote-exec" {
     connection {
@@ -30,7 +29,7 @@ resource "null_resource" "cluster-config" {
       private_key = file(replace(var.ssh-key, ".pub", ""))
       agent       = true
     }
-    inline = ["sudo -s rladmin show cluster "]
+    inline = ["echo 'rladmin'"]
     # TODO: Configure the cluster with rladmin to set rack zone awareness properly
   }
 }
