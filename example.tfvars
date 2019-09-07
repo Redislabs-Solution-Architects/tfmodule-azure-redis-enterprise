@@ -1,5 +1,5 @@
 location    = "westus2"
-net-name    = "maguec3"
+net-name    = "redisentpoc"
 net-cidr    = ["10.0.1.0/24"]
 node-count  = 3
 node-size   = "Standard_DS4_v2"

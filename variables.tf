@@ -67,5 +67,5 @@ variable "ssh-key" {
 
 variable "re-download-url" {
   description = "The download link for the redis enterprise software"
-  default     = null
+  # default     = null
 }
