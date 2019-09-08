@@ -32,6 +32,9 @@ resource "azurerm_virtual_machine" "myterraformvm" {
       key_data = "${file(var.ssh-key)}"
     }
   }
+# storage_data_disk {
+# 
+# }
 
   #    boot_diagnostics {
   #        enabled     = "true"

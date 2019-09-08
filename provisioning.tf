@@ -1,8 +1,8 @@
 # If the download URL is set, download and install the software
 locals {
   re-install = (var.re-download-url != null ? var.node-count : 0)
-  first_node = "rladmin cluster create name ${var.cluster-name}.${var.cluster-base-domain} username ${var.username} password ${var.password}"
-  other_node ="rladmin cluster join nodes ${azurerm_network_interface.nic[0].private_ip_address} username ${var.username} password ${var.password}"
+  first_node = "/opt/redislabs/bin/rladmin cluster create name ${var.cluster-name}.${var.cluster-base-domain} username ${var.username} password ${var.password}"
+  other_node ="/opt/redislabs/bin/rladmin cluster join nodes ${azurerm_network_interface.nic[0].private_ip_address} username ${var.username} password ${var.password}"
 }
 
 # See bug in https://github.com/terraform-providers/terraform-provider-azurerm/issues/310
