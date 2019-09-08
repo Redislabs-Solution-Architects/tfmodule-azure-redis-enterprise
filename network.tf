@@ -52,3 +52,38 @@ resource "azurerm_network_interface" "nic" {
   }
 
 }
+
+
+resource "azurerm_dns_zone" "fixedip" {
+  name                = "${var.cluster-base-domain}"
+  resource_group_name  = "${azurerm_resource_group.resource.name}"
+  depends_on          = ["azurerm_virtual_machine.myterraformvm"]
+}
+
+# TODO - Delegated subzone by DNS NS records added to the parent zone, using the NS entries from above
+
+resource "azurerm_dns_a_record" "fixedip" {
+  count = var.node-count
+  name = "ns${count.index}-${var.cluster-name}"
+  zone_name           = "${azurerm_dns_zone.fixedip.name}"
+  resource_group_name  = "${azurerm_resource_group.resource.name}"
+  # records = data.azurerm_public_ip.fixedip.*.ip_address
+  records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
+  # depends_on          = ["data.azurerm_public_ip.fixedip", "azurerm_virtual_machine.myterraformvm", "azurerm_dns_zone.fixedip"]
+  ttl                 = 300
+  lifecycle {
+    create_before_destroy = false
+  }
+}
+
+resource "azurerm_dns_ns_record" "fixedip" {
+  count = var.node-count
+  name                = "${var.cluster-name}.${var.cluster-base-domain}"
+  zone_name           = "${azurerm_dns_zone.fixedip.name}"
+  resource_group_name  = "${azurerm_resource_group.resource.name}"
+  ttl                 = 300
+  # # Need trailing periods on each record
+  records = formatlist("%s.${var.cluster-base-domain}.", azurerm_dns_a_record.fixedip.*.name)
+  #records = azurerm_dns_a_record.fixedip.*.name
+  depends_on          = ["azurerm_virtual_machine.myterraformvm", "azurerm_dns_a_record.fixedip"]
+}

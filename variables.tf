@@ -11,6 +11,15 @@ variable "net-name" {
   description = "The name to be associated with the network"
 }
 
+variable "cluster-name" {
+  default = "redisentpoc"
+}
+
+variable "cluster-base-domain" {
+
+  default = "redis.life"
+}
+
 variable "node-size" {
   description = "The Size of the VM to run"
   default     = "Standard_DS1_v2"
