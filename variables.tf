@@ -20,6 +20,14 @@ variable "cluster-base-domain" {
   default = "redis.life"
 }
 
+variable "username" {
+  default = "demo@redislabs.com"
+}
+
+variable "password" {
+  default = "ULTRASECURE"
+}
+
 variable "node-size" {
   description = "The Size of the VM to run"
   default     = "Standard_DS1_v2"

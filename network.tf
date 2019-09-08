@@ -69,11 +69,8 @@ resource "azurerm_dns_a_record" "fixedip" {
   resource_group_name  = "${azurerm_resource_group.resource.name}"
   # records = data.azurerm_public_ip.fixedip.*.ip_address
   records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
-  # depends_on          = ["data.azurerm_public_ip.fixedip", "azurerm_virtual_machine.myterraformvm", "azurerm_dns_zone.fixedip"]
   ttl                 = 300
-  lifecycle {
-    create_before_destroy = false
-  }
+
 }
 
 resource "azurerm_dns_ns_record" "fixedip" {
@@ -82,8 +79,6 @@ resource "azurerm_dns_ns_record" "fixedip" {
   zone_name           = "${azurerm_dns_zone.fixedip.name}"
   resource_group_name  = "${azurerm_resource_group.resource.name}"
   ttl                 = 300
-  # # Need trailing periods on each record
+  # Need trailing periods on each record
   records = formatlist("%s.${var.cluster-base-domain}.", azurerm_dns_a_record.fixedip.*.name)
-  #records = azurerm_dns_a_record.fixedip.*.name
-  depends_on          = ["azurerm_virtual_machine.myterraformvm", "azurerm_dns_a_record.fixedip"]
 }
