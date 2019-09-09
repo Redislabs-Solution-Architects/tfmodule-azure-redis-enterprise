@@ -1,14 +1,21 @@
 variable "location" {
   description = "The location where resources will be created"
+  default = "west2us"
+}
+
+variable av_zone {
+  default = ["1","2"]
 }
 
 variable "net-cidr" {
   description = "The CIDR blocks to be used in the network"
   type        = "list"
+  default     = ["10.0.1.0/24"]
 }
 
 variable "net-name" {
   description = "The name to be associated with the network"
+  default = "redisentpoc"
 }
 
 variable "cluster-name" {
@@ -17,7 +24,7 @@ variable "cluster-name" {
 
 variable "cluster-base-domain" {
 
-  default = "redis.life"
+  default = "azure.redis.life"
 }
 
 variable "username" {
@@ -28,6 +35,11 @@ variable "password" {
   default = "ULTRASECURE"
 }
 
+variable "re-license" {
+  description = "License Key for non-trial licensing"
+  default = null
+}
+
 variable "node-size" {
   description = "The Size of the VM to run"
   default     = "Standard_DS1_v2"
@@ -35,17 +47,17 @@ variable "node-size" {
 
 variable "node-publisher" {
   description = "The owner of the image"
-  default     = "Canonical"
+  default     = "RedHat"
 }
 
 variable "node-offer" {
   description = "The type of the image"
-  default     = "UbuntuServer"
+  default     = "RHEL"
 }
 
 variable "node-sku" {
   description = "The SKU of the image"
-  default     = "16.04.0-LTS"
+  default     = "7-RAW"
 }
 
 variable "node-version" {
@@ -60,7 +72,7 @@ variable "subnet-count" {
 
 variable "node-count" {
   description = "The number of nodes to spin up"
-  default     = 2
+  default     = 3
 }
 
 variable "common-tags" {
@@ -84,5 +96,5 @@ variable "ssh-key" {
 
 variable "re-download-url" {
   description = "The download link for the redis enterprise software"
-  # default     = null
+  default     = null
 }

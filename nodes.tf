@@ -12,6 +12,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
   }
+  delete_os_disk_on_termination = true
 
   storage_image_reference {
     publisher = var.node-publisher
@@ -32,9 +33,18 @@ resource "azurerm_virtual_machine" "myterraformvm" {
       key_data = "${file(var.ssh-key)}"
     }
   }
-# storage_data_disk {
-# 
-# }
+
+  storage_data_disk {
+      name                = "${var.net-name}-data-${count.index}"
+      caching             = "ReadWrite"
+      create_option       = "Empty"
+      managed_disk_type   = "Premium_LRS"
+      lun                 = 0
+      disk_size_gb        = "256"
+  }
+
+  delete_data_disks_on_termination = true
+  zones = [element(var.av_zone, count.index)]
 
   #    boot_diagnostics {
   #        enabled     = "true"
