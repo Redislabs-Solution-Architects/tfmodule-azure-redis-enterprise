@@ -1,9 +1,12 @@
 location    = "westus2"
-net-name    = "maguec3"
-net-cidr    = ["10.0.1.0/24"]
-node-count  = 3
+net-name    = "redis-test"
+net-cidr    = ["10.0.2.0/24"]
+node-count  = 5
 node-size   = "Standard_DS4_v2"
 common-tags = { Config = "terraform", Environment = "tf-test" }
+cluster-base-domain = "redis.life"
+cluster-name = "redis-test"
+password = "EVENmoarSECURE"
 node-publisher = "RedHat"
 node-offer     = "RHEL"
 node-sku       = "7-RAW"

@@ -11,6 +11,23 @@ variable "net-name" {
   description = "The name to be associated with the network"
 }
 
+variable "cluster-name" {
+  default = "redisentpoc"
+}
+
+variable "cluster-base-domain" {
+
+  default = "redis.life"
+}
+
+variable "username" {
+  default = "demo@redislabs.com"
+}
+
+variable "password" {
+  default = "ULTRASECURE"
+}
+
 variable "node-size" {
   description = "The Size of the VM to run"
   default     = "Standard_DS1_v2"
@@ -67,5 +84,5 @@ variable "ssh-key" {
 
 variable "re-download-url" {
   description = "The download link for the redis enterprise software"
-  default     = null
+  # default     = null
 }
