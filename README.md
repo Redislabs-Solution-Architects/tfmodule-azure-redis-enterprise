@@ -9,9 +9,14 @@ You can also use this to set up two clusters in two separate Azure regions; thes
 ```
 cp example.tfvars mysettings.tfvars
 terraform init
-terraform apply -var-file="mysettings.tfvars" 
 ```
+
+Make sure to update the variables in mysettings.tfvars, especially `password` and `cluster-base-domain`. It's simplest if you have a spare domain name for demos, as this recipe will set up a complete zone file, but you can use a delegated subzone instead.
 
 Make sure that you're using an ssh key without a passphrase. (If necessary, create a new SSH key using `ssh-keygen` and change the `ssh-key` variable to match.)
 
-It's recommended that you use a FQDN for the cluster name, and set up the appropriate DNS records. 
+```
+terraform apply -var-file="mysettings.tfvars" 
+```
+
+Once the apply has finished, you'll need to add NS records (either for the domain or delegated subzone) to your upstream DNS. 

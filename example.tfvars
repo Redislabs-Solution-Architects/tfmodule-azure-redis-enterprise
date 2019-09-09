@@ -6,6 +6,7 @@ node-size   = "Standard_DS4_v2"
 common-tags = { Config = "terraform", Environment = "tf-test" }
 cluster-base-domain = "redis.life"
 cluster-name = "redis-test"
+password = "EVENmoarSECURE"
 node-publisher = "RedHat"
 node-offer     = "RHEL"
 node-sku       = "7-RAW"
