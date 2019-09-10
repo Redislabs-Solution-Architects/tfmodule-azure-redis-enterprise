@@ -1,8 +1,7 @@
+// Using the IP of the installer for security rules
 data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
-
-
 
 resource "azurerm_network_security_group" "sg" {
   name                = "${var.net-name}"
@@ -21,7 +20,6 @@ resource "azurerm_network_security_group" "sg" {
     destination_address_prefix = "*"
   }
 
-
   security_rule {
     name                       = "HTTPS-UI"
     priority                   = 1000
@@ -33,7 +31,6 @@ resource "azurerm_network_security_group" "sg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
-
 
   security_rule {
     name                       = "DBs"
@@ -59,17 +56,17 @@ resource "azurerm_network_security_group" "sg" {
     destination_address_prefix = "*"
   }
 
-  security_rule {
-    name                       = "Prometheus"
-    priority                   = 1007
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "8070"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
+  # security_rule {
+  #   name                       = "Prometheus"
+  #   priority                   = 1007
+  #   direction                  = "Inbound"
+  #   access                     = "Allow"
+  #   protocol                   = "Tcp"
+  #   source_port_range          = "*"
+  #   destination_port_range     = "8070"
+  #   source_address_prefix      = "*"
+  #   destination_address_prefix = "*"
+  # }
 
   security_rule {
     name                       = "DNS-Server"

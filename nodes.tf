@@ -1,4 +1,4 @@
-resource "azurerm_virtual_machine" "myterraformvm" {
+resource "azurerm_virtual_machine" "redis-nodes" {
   count                 = var.node-count
   name                  = "${var.net-name}-${count.index}"
   location              = var.location
@@ -34,6 +34,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     }
   }
 
+  # TODO: Make the number and size of data disks configurable
   storage_data_disk {
       name                = "${var.net-name}-data-a-${count.index}"
       caching             = "ReadWrite"
@@ -54,14 +55,5 @@ resource "azurerm_virtual_machine" "myterraformvm" {
 
   delete_data_disks_on_termination = true
   zones = [element(var.av_zone, count.index)]
-
-  #    boot_diagnostics {
-  #        enabled     = "true"
-  #        storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
-  #    }
-
   tags = merge({ Name = "${var.net-name}-${count.index}" }, var.common-tags)
 }
-
-
-# TODO: Add a jumpbox to run a client on
