@@ -23,8 +23,11 @@ variable "cluster-name" {
 }
 
 variable "cluster-base-domain" {
-
   default = "azure.redis.life"
+}
+
+variable "cluster-base-resource-group" {
+  default = null
 }
 
 variable "username" {
