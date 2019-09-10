@@ -1,11 +1,10 @@
 
 locals {
-  # flash_enabled 
-    # TODO: Set up data drives with RAID-1 on the right mount point
+  # If the download URL is set, download and install the software
   re-install = (var.re-download-url != null ? var.node-count : 0)
   # TODO: fdisk and partition some flash drives, then RAID and mount them.
   # flash_mount = "mkdir -p /mnt/flash && "
-  # If the download URL is set, download and install the software
+  # flash_enabled 
   install_step = "[ ! -f '/var/tmp/install.sh' ] && cd /var/tmp && wget ${var.re-download-url} && tar -xvf redislabs*.tar && sudo -s ./install.sh -y"
   license-install = (var.re-license != null ? ""  : "echo 'trial license time.'")
   short_pause = "sleep 10"
