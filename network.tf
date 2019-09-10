@@ -1,3 +1,8 @@
+locals {
+  upstream_dns = (var.cluster-base-resource-group != null ? 1 : 0)
+  full_zone = (var.cluster-base-resource-group == null ? 1 : 0)
+}
+
 resource "azurerm_resource_group" "resource" {
   name     = var.net-name
   location = var.location
@@ -24,17 +29,12 @@ resource "azurerm_public_ip" "fixedip" {
   count               = var.node-count
   name                = "${var.net-name}-${count.index}"
   location            = var.location
+  zones = [element(var.av_zone, count.index)]
   resource_group_name = "${azurerm_resource_group.resource.name}"
   allocation_method   = "Dynamic"
   tags                = merge({ Name = "${var.net-name}-${count.index}" }, var.common-tags)
 }
 
-data "azurerm_public_ip" "fixedip" {
-  count               = var.node-count
-  name                = "${element(azurerm_public_ip.fixedip.*.name, count.index)}"
-  resource_group_name = "${azurerm_resource_group.resource.name}"
-  depends_on          = ["azurerm_virtual_machine.myterraformvm"]
-}
 
 resource "azurerm_network_interface" "nic" {
   count                     = var.node-count
@@ -50,35 +50,40 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = "${element(azurerm_public_ip.fixedip.*.id, count.index)}"
   }
-
 }
 
+data "azurerm_public_ip" "fixedip" {
+  count               = var.node-count
+  name                = "${element(azurerm_public_ip.fixedip.*.name, count.index)}"
+  zones = [element(var.av_zone, count.index)]
+  resource_group_name = "${azurerm_resource_group.resource.name}"
+  depends_on          = ["azurerm_virtual_machine.myterraformvm", "azurerm_network_interface.nic"]
+}
 
+# If there's no upstream record to update, create one
 resource "azurerm_dns_zone" "fixedip" {
+  count               = local.full_zone
   name                = "${var.cluster-base-domain}"
-  resource_group_name  = "${azurerm_resource_group.resource.name}"
-  depends_on          = ["azurerm_virtual_machine.myterraformvm"]
+  resource_group_name = "${azurerm_resource_group.resource.name}"
 }
-
-# TODO - Delegated subzone by DNS NS records added to the parent zone, using the NS entries from above
 
 resource "azurerm_dns_a_record" "fixedip" {
   count = var.node-count
   name = "ns${count.index}-${var.cluster-name}"
-  zone_name           = "${azurerm_dns_zone.fixedip.name}"
-  resource_group_name  = "${azurerm_resource_group.resource.name}"
-  # records = data.azurerm_public_ip.fixedip.*.ip_address
-  records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
+  zone_name           = "${var.cluster-base-domain}"
+  resource_group_name  = "${(var.cluster-base-resource-group != null ? var.cluster-base-resource-group : azurerm_resource_group.resource.name)}"
+  records =  [ "${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index)}" ]
+  # records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
   ttl                 = 300
-
 }
 
+# TODO - allow switching between public and private IP addressing in DNS
 resource "azurerm_dns_ns_record" "fixedip" {
   count = var.node-count
-  name                = "${var.cluster-name}.${var.cluster-base-domain}"
-  zone_name           = "${azurerm_dns_zone.fixedip.name}"
-  resource_group_name  = "${azurerm_resource_group.resource.name}"
+  name                = "${var.cluster-name}"
+  zone_name           = "${var.cluster-base-domain}"
+  resource_group_name  = "${(var.cluster-base-resource-group != null ? var.cluster-base-resource-group : azurerm_resource_group.resource.name)}"
   ttl                 = 300
-  # Need trailing periods on each record
+  # Has to have trailing periods on each record
   records = formatlist("%s.${var.cluster-base-domain}.", azurerm_dns_a_record.fixedip.*.name)
 }

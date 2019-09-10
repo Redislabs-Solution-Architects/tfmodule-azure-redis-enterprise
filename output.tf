@@ -6,6 +6,6 @@ output "ui-links" {
   value = formatlist("https://%s:8443/", azurerm_public_ip.fixedip.*.ip_address)
 }
 
-output "dns-servers" {
-  value = azurerm_dns_zone.fixedip.name_servers
-}
+# output "dns-servers" {
+#   value = azurerm_dns_zone.fixedip.name_servers
+# }
