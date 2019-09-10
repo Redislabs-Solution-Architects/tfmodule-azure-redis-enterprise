@@ -38,6 +38,7 @@ variable "username" {
   default = "demo@redislabs.com"
 }
 
+# TODO: Use a random password resource instead here.
 variable "password" {
   default = "ULTRASECURE"
 }
