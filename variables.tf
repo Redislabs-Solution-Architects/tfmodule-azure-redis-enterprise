@@ -101,3 +101,7 @@ variable "re-download-url" {
   description = "The download link for the redis enterprise software"
   default     = null
 }
+
+variable "demodb-name" {
+  default = null
+}
