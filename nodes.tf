@@ -35,11 +35,20 @@ resource "azurerm_virtual_machine" "myterraformvm" {
   }
 
   storage_data_disk {
-      name                = "${var.net-name}-data-${count.index}"
+      name                = "${var.net-name}-data-a-${count.index}"
       caching             = "ReadWrite"
       create_option       = "Empty"
       managed_disk_type   = "Premium_LRS"
       lun                 = 0
+      disk_size_gb        = "256"
+  }
+
+  storage_data_disk {
+      name                = "${var.net-name}-data-b-${count.index}"
+      caching             = "ReadWrite"
+      create_option       = "Empty"
+      managed_disk_type   = "Premium_LRS"
+      lun                 = 1
       disk_size_gb        = "256"
   }
 
