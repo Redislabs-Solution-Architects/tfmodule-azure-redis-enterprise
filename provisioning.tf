@@ -26,7 +26,8 @@ resource "null_resource" "remote-config" {
     # flash_enabled flash_path /mnt/flash 
     inline = ["set -x",
               "${ local.install_step}",
-              "/opt/redislabs/bin/rladmin cluster create name ${var.cluster-name}.${var.cluster-base-domain} username ${var.username} password ${var.password} rack_aware rack_id rack-1 external_addr ['${data.azurerm_public_ip.fixedip[0].ip_address}']",
+              "/opt/redislabs/bin/rladmin cluster create name ${var.cluster-name}.${var.cluster-base-domain} username ${var.username} password ${var.password} rack_aware rack_id rack-1",
+              "/opt/redislabs/bin/rladmin node 1 external_addr set ${data.azurerm_public_ip.fixedip[0].ip_address}", 
               "${ local.short_pause }" ]
     # TODO: Configure the cluster with rladmin to set rack zone awareness properly
   }
@@ -43,9 +44,10 @@ resource "null_resource" "remote-config-nodes" {
       agent       = true
     }
     # TODO: Set up data drives with RAID-1 on the right mount point
-    inline = ["set -x",
+    inline = [ "set -x",
               "${ local.install_step}",
-              "${ local.other_node } rack_id rack-${ (count.index + 1) % length(var.av_zone) + 1  } external_addr ['${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)}']" ]
+              "${ local.other_node } rack_id rack-${ (count.index + 1) % length(var.av_zone) + 1  }",
+              "/opt/redislabs/bin/rladmin node ${count.index + 2} external_addr set ${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)}" ]
   }
   depends_on = [ "null_resource.remote-config"]
 }

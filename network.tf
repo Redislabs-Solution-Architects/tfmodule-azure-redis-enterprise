@@ -62,24 +62,25 @@ resource "azurerm_dns_zone" "fixedip" {
 }
 
 # TODO - Delegated subzone by DNS NS records added to the parent zone, using the NS entries from above
+# TODO - allow switching between public and private IP addressing in DNS
 
 resource "azurerm_dns_a_record" "fixedip" {
   count = var.node-count
   name = "ns${count.index}-${var.cluster-name}"
   zone_name           = "${azurerm_dns_zone.fixedip.name}"
   resource_group_name  = "${azurerm_resource_group.resource.name}"
-  # records = data.azurerm_public_ip.fixedip.*.ip_address
-  records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
+  records =  [ "${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index)}" ]
+  # records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
   ttl                 = 300
 
 }
 
 resource "azurerm_dns_ns_record" "fixedip" {
   count = var.node-count
-  name                = "${var.cluster-name}.${var.cluster-base-domain}"
+  name                = "${var.cluster-name}"
   zone_name           = "${azurerm_dns_zone.fixedip.name}"
   resource_group_name  = "${azurerm_resource_group.resource.name}"
   ttl                 = 300
-  # Need trailing periods on each record
+  # Has to have trailing periods on each record
   records = formatlist("%s.${var.cluster-base-domain}.", azurerm_dns_a_record.fixedip.*.name)
 }
