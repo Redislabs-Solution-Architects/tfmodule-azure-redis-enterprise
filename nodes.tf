@@ -1,4 +1,4 @@
-resource "azurerm_virtual_machine" "myterraformvm" {
+resource "azurerm_virtual_machine" "redis-nodes" {
   count                 = var.node-count
   name                  = "${var.net-name}-${count.index}"
   location              = var.location
@@ -12,6 +12,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
   }
+  delete_os_disk_on_termination = true
 
   storage_image_reference {
     publisher = var.node-publisher
@@ -33,10 +34,26 @@ resource "azurerm_virtual_machine" "myterraformvm" {
     }
   }
 
-  #    boot_diagnostics {
-  #        enabled     = "true"
-  #        storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
-  #    }
+  # TODO: Make the number and size of data disks configurable
+  storage_data_disk {
+      name                = "${var.net-name}-data-a-${count.index}"
+      caching             = "ReadWrite"
+      create_option       = "Empty"
+      managed_disk_type   = "Premium_LRS"
+      lun                 = 0
+      disk_size_gb        = "256"
+  }
 
+  storage_data_disk {
+      name                = "${var.net-name}-data-b-${count.index}"
+      caching             = "ReadWrite"
+      create_option       = "Empty"
+      managed_disk_type   = "Premium_LRS"
+      lun                 = 1
+      disk_size_gb        = "256"
+  }
+
+  delete_data_disks_on_termination = true
+  zones = [element(var.av_zone, count.index)]
   tags = merge({ Name = "${var.net-name}-${count.index}" }, var.common-tags)
 }
