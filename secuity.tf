@@ -30,6 +30,19 @@ resource "azurerm_network_security_group" "sg" {
 
 
   security_rule {
+    name                       = "HTTPS-API"
+    priority                   = 1100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "9443"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+
+  security_rule {
     name                       = "DB-10003"
     priority                   = 1009
     direction                  = "Inbound"
