@@ -5,4 +5,9 @@ but for now it's a great starting point for Redis Enterprise.
 provider "azurerm" {
   version = "=1.28.0"
   partner_id = "aeede883-0195-5a05-849b-ad4c2153b7cf" 
+  subscription_id = "98decbff-8837-4aba-9a3e-d9ea072f555a"
+}
+
+terraform {
+    backend "azurerm" {}
 }

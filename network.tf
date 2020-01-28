@@ -24,7 +24,7 @@ resource "azurerm_public_ip" "fixedip" {
   count               = var.node-count
   name                = "${var.net-name}-${count.index}"
   location            = var.location
-  zones = [element(var.av_zone, count.index)]
+  zones               = [element(var.av_zone, count.index)]
   resource_group_name = "${azurerm_resource_group.resource.name}"
   allocation_method   = "Dynamic"
   tags                = merge({ Name = "${var.net-name}-${count.index}" }, var.common-tags)
@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "nic" {
 data "azurerm_public_ip" "fixedip" {
   count               = var.node-count
   name                = "${element(azurerm_public_ip.fixedip.*.name, count.index)}"
-  zones = [element(var.av_zone, count.index)]
+  zones               = [element(var.av_zone, count.index)]
   resource_group_name = "${azurerm_resource_group.resource.name}"
   depends_on          = ["azurerm_virtual_machine.redis-nodes", "azurerm_network_interface.nic"]
 }
