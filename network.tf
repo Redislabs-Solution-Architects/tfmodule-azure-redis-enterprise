@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "resource" {
-  name     = var.net-name
+  name     = var.cluster-resource-group
   location = var.location
   tags     = merge({ Name = "${var.net-name}" }, var.common-tags)
 }

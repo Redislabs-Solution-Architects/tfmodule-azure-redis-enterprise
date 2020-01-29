@@ -1,6 +1,7 @@
-location                        = "westus2"
+location                        = "eastus2"
 av_zone                         = ["1","2"]
 net-name                        = "redis-test"
+cluster-resource-group          = "azuse2-redis-test"
 net-cidr                        = ["10.0.2.0/24"]
 node-count                      = 3
 node-size                       = "Standard_DS3_v2"
@@ -8,6 +9,7 @@ common-tags                     = { Config = "terraform", Environment = "tf-test
 cluster-base-domain             = "kaiser.guru"
 cluster-base-resource-group     = "azuse-kaiserguru-dns-rg-prod"
 cluster-name                    = "redis-test-mgk"
+username                        = "demo@redislabs.com"
 password                        = "EVENmoarSECURE"
 node-publisher                  = "RedHat"
 node-offer                      = "RHEL"

@@ -34,6 +34,11 @@ variable "cluster-base-resource-group" {
   default = null
 }
 
+variable "cluster-resource-group" {
+  description = "Resource group for the cluster."
+  default = null
+}
+
 variable "username" {
   default = "demo@redislabs.com"
 }
