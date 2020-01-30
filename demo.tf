@@ -12,7 +12,7 @@ resource "null_resource" "create-demo" {
       agent       = true
     }
     inline = [
-        "curl -d '{\"name\": \"${var.demodb-name}\", \"type\": \"redis\", \"memory_size\": 1000000, \"replication\": true}' -H 'Content-Type: application/json' https://127.0.0.1:9443/v1/bdbs -k --user \"${var.username}:${var.password}\""
+        "curl -d '{\"name\": \"${var.demodb-name}\", \"type\": \"redis\", \"memory_size\": 20000000, \"replication\": true}' -H 'Content-Type: application/json' https://127.0.0.1:9443/v1/bdbs -k --user \"${var.username}:${var.password}\""
     ]  
   }
   depends_on = [ "null_resource.remote-config-nodes"]
