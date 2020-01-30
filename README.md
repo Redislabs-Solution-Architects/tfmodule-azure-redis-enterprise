@@ -28,6 +28,17 @@ cp example.tfvars mysettings.tfvars
 terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=x7VnVoswQvNA0M79JRGAaLhqZ32/PVNzFLSQCRT4ZKkW19NC4q9jFsFrrSGB5L2XVMAiwm487iLwyVLVc1Q1LQ==" -backend-config="key=redis.terraform-azure.tfstate"
 ```
 
+## Create workspaces
+```BASH
+terraform workspace new useast2
+terraform workspace new uswest2
+```
+
+## Select workspace
+```BASH
+terraform workspace select {workspace}
+```
+
 Make sure to update the variables in mysettings.tfvars, especially `password` and `cluster-base-domain`. It's simplest if you have a spare domain name for demos, as this recipe will set up a complete zone file, but you can use a delegated subzone instead. If you host DNS for the base domain in Azure, specify the resource group that the zone file is in with `cluster-base-resource-group` and this will add A and NS records to that zone file (instead of setting up a complete zone).
 
 Make sure that you're using an ssh key without a passphrase. (If necessary, create a new SSH key using `ssh-keygen` and change the `ssh-key` variable to match.)
@@ -35,7 +46,7 @@ Make sure that you're using an ssh key without a passphrase. (If necessary, crea
 ## Step Two: Apply
 
 ```BASH
-terraform apply --parallelism=20 -var-file="mysettings.tfvars"
+terraform apply --parallelism=20 -var-file="./env/mysettings.{workspace}.tfvars"
 ```
 
 Once the apply has finished, you might need to add NS records (either for the domain or delegated subzone) to your upstream DNS.
