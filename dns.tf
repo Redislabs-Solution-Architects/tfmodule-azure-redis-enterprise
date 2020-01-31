@@ -6,6 +6,11 @@ resource "azurerm_dns_a_record" "fixedip" {
   records =  [ "${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index)}" ]
   # records = [ "${element(azurerm_network_interface.nic.*.private_ip_address, count.index)}" ]
   ttl                 = 300
+  lifecycle {
+    ignore_changes = [      
+      records
+    ]
+  }
 }
 
 resource "azurerm_dns_ns_record" "fixedip" {
@@ -15,5 +20,5 @@ resource "azurerm_dns_ns_record" "fixedip" {
   resource_group_name = "${(var.cluster-base-resource-group != null ? var.cluster-base-resource-group : azurerm_resource_group.resource.name)}"
   ttl                 = 300
   # Has to have trailing periods on each record
-  records             = formatlist("%s.${var.cluster-base-domain}.", azurerm_dns_a_record.fixedip.*.name)
+  records             = formatlist("%s.${var.cluster-base-domain}.", azurerm_dns_a_record.fixedip.*.name)    
 }
