@@ -1,17 +1,42 @@
+variable "location" {
+  description = "The location where resources will be created"
+  default = "west2us"
+}
+
 variable av_zone {
-  description = "A list of availability zones to use. Make sure they're valid for this location." 
+  description = "A list of availability zones to use. Make sure they're valid for this location."
+  default = ["1","2"]
+}
+
+variable "net-cidr" {
+  description = "The CIDR blocks to be used in the network"
+  type        = list
+  default     = ["10.0.1.0/24"]
 }
 
 variable "net-name" {
-  description = "The name to be associated with the network"  
+  description = "The name to be associated with the network"
+  default = "redisentpoc"
 }
 
 variable "cluster-name" {
-  description = "The domain name for the cluster (in front of the cluster-base-domain)."  
+  description = "The domain name for the cluster (in front of the cluster-base-domain)."
+  default = "redisentpoc"
 }
 
 variable "cluster-base-domain" {
-  description = "A base domain name you own. Helpful if it's managed by a zone file in Azure."  
+  description = "A base domain name you own. Helpful if it's managed by a zone file in Azure."
+  default = "azure.redis.life"
+}
+
+variable "cluster-base-resource-group" {
+  description = "The resource group that contains the zone file for the cluster-base-domain."
+  default = null
+}
+
+variable "cluster-resource-group" {
+  description = "Resource group for the cluster."
+  default = null
 }
 
 variable "username" {
@@ -22,14 +47,36 @@ variable "password" {
   
 }
 
+# TODO: Make this work. Currently unused.
 variable "re-license" {
-  description = "License Key for non-trial licensing"  
-  default     = null
+  description = "License Key for non-trial licensing"
+  default = null
 }
 
 variable "node-size" {
   description = "The Size of the VM to run for nodes."
-  default     = "Standard_DS4_v2"
+  default     = "Standard_DS_v2"
+}
+
+# NOTE that you can't change this without changing parts of the provisioning scripts.
+variable "node-publisher" {
+  description = "The owner of the image"
+  default     = "RedHat"
+}
+
+variable "node-offer" {
+  description = "The type of the image"
+  default     = "RHEL"
+}
+
+variable "node-sku" {
+  description = "The SKU of the image"
+  default     = "7-RAW"
+}
+
+variable "node-version" {
+  description = "The version of the image"
+  default     = "latest"
 }
 
 variable "subnet-count" {

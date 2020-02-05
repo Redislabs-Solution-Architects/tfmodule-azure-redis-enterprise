@@ -1,21 +1,14 @@
-location                        = "westus2"
+# Common to all locations in cluster
 av_zone                         = ["1","2"]
 net-name                        = "redis-test"
-cluster-resource-group          = "azusw2-redis-test"
-net-cidr                        = ["10.0.3.0/24"]
-node-count                      = 3
-node-size                       = "Standard_DS4_v2"
-cluster-base-domain             = "uswest2.kaiser.guru"
-cluster-base-resource-group     = "azuse-kaiserguru-dns-rg-prod"
+cluster-base-domain             = "useast2.kaiser.guru"
 cluster-name                    = "redis-test-mgk"
 username                        = "demo@redislabs.com"
 password                        = "EVENmoarSECURE"
-node-publisher                  = "RedHat"
-node-offer                      = "RHEL"
-node-sku                        = "7-RAW"
-node-version                    = "latest"
 re-download-url                 = "https://s3.amazonaws.com/redis-enterprise-software-downloads/5.4.10/redislabs-5.4.10-22-rhel7-x86_64.tar"
 demodb-name                     = "first-db"
+
+# Tags
 cost_center                     = "57601"
 business_unit                   = "4116"
 owner                           = "mkaiser@incomm.com"
