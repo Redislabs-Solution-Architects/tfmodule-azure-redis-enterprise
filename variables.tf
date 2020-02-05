@@ -120,3 +120,15 @@ variable "demodb-name" {
   default = null
   description = "The name of a demo database to create after cluster setup."
 }
+
+locals {
+  tags = {
+		cost_center = "${var.cost_center}"
+		business_unit = "${var.business_unit}"
+		owner = "${var.owner}"
+		environment = "${var.environment}"
+		platform_application = "${var.platform_application}"
+		compliance_data_profile = "${var.compliance_data_profile}"
+		data_sovereignty_location = "${var.data_sovereignty_location}"
+	}
+}

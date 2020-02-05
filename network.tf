@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "resource" {
   name     = var.cluster-resource-group
   location = var.location
-  tags     = merge({ Name = "${var.net-name}" }, var.common-tags)
+  tags     = local.tags
 }
 
 resource "azurerm_virtual_network" "network" {
