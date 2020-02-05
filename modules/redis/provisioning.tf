@@ -5,8 +5,7 @@ locals {
   # TODO: fdisk and partition some flash drives, then RAID and mount them.
   # flash_mount = "mkdir -p /mnt/flash && "
     # flash_enabled flash_path /mnt/flash 
-  install_step = "[ ! -f '/var/tmp/install.sh' ] && cd /var/tmp && wget ${var.re-download-url} && tar -xvf redislabs*.tar && sudo -s ./install.sh -y"
-  license-install = (var.re-license != null ? ""  : "echo 'trial license time.'")
+  install_step = "[ ! -f '/var/tmp/install.sh' ] && cd /var/tmp && wget ${var.re-download-url} && tar -xvf redislabs*.tar && sudo -s ./install.sh -y"  
   short_pause = "sleep 10"
   other_node ="/opt/redislabs/bin/rladmin cluster join nodes ${azurerm_network_interface.nic[0].private_ip_address} username ${var.username} password ${var.password}"
 

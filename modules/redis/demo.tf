@@ -14,7 +14,7 @@ resource "null_resource" "create-demo" {
     }
     inline = [
         "curl -d '{\"name\": \"${var.demodb-name}\", \"type\": \"redis\", \"memory_size\": 20000000000, \"replication\": true}' -H 'Content-Type: application/json' https://127.0.0.1:9443/v1/bdbs -k --user \"${var.username}:${var.password}\"",
-        "curl -k -X PUT https://127.0.0.1:9443/v1/license -H 'Authorization: Basic dGVzdEByZWRpc2xhYnMuY29tOnJlZGlzbGFicw==' -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d '{\"license\": \"${local.license}\"}' "        
+        "curl -k -X PUT https://127.0.0.1:9443/v1/license -H 'Authorization: Basic dGVzdEByZWRpc2xhYnMuY29tOnJlZGlzbGFicw==' -H 'Content-Type: application/json' -H 'cache-control: no-cache' --user \"${var.username}:${var.password}\" -d '{\"license\": \"${local.license}\"}' "        
     ]  
   }
   depends_on = [ null_resource.remote-config-nodes ]
