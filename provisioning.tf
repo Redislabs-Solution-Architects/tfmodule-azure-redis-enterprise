@@ -18,7 +18,7 @@ resource "null_resource" "remote-config" {
   provisioner "remote-exec" {
     connection {
       user        = var.ssh-user
-      host        = "${data.azurerm_public_ip.fixedip[0].ip_address}"
+      host        = data.azurerm_public_ip.fixedip[0].ip_address
       private_key = file(replace(var.ssh-key, ".pub", ""))
       agent       = true
     }
@@ -28,7 +28,7 @@ resource "null_resource" "remote-config" {
               "/opt/redislabs/bin/rladmin node 1 external_addr set ${data.azurerm_public_ip.fixedip[0].ip_address}", 
               "${ local.short_pause }" ]
   }
-  depends_on = [ "azurerm_dns_ns_record.fixedip"]
+  depends_on = [ azurerm_dns_ns_record.fixedip ]
 }
 
 resource "null_resource" "remote-config-nodes" {
@@ -36,15 +36,15 @@ resource "null_resource" "remote-config-nodes" {
   provisioner "remote-exec" {
     connection {
       user        = var.ssh-user
-      host        = "${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)}"
+      host        = element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)
       private_key = file(replace(var.ssh-key, ".pub", ""))
       agent       = true
     }
 
     inline = [ "set -x",
-              "${ local.install_step}",
+               local.install_step,
               "${ local.other_node } rack_id rack-${ (count.index + 1) % length(var.av_zone) + 1  }",
               "/opt/redislabs/bin/rladmin node ${count.index + 2} external_addr set ${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)}" ]
   }
-  depends_on = [ "null_resource.remote-config"]
+  depends_on = [ null_resource.remote-config ]
 }

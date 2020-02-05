@@ -8,7 +8,7 @@ resource "null_resource" "create-demo" {
   provisioner "remote-exec" {
     connection {
       user        = var.ssh-user
-      host        = "${data.azurerm_public_ip.fixedip[0].ip_address}"
+      host        = data.azurerm_public_ip.fixedip[0].ip_address
       private_key = file(replace(var.ssh-key, ".pub", ""))
       agent       = true
     }
@@ -17,5 +17,5 @@ resource "null_resource" "create-demo" {
         "curl -k -X PUT https://127.0.0.1:9443/v1/license -H 'Authorization: Basic dGVzdEByZWRpc2xhYnMuY29tOnJlZGlzbGFicw==' -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d '{\"license\": \"${local.license}\"}' "        
     ]  
   }
-  depends_on = [ "null_resource.remote-config-nodes"]
+  depends_on = [ null_resource.remote-config-nodes ]
 }

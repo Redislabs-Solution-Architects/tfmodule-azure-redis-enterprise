@@ -2,8 +2,8 @@ resource "azurerm_virtual_machine" "redis-nodes" {
   count                 = var.node-count
   name                  = "${var.net-name}-${count.index}"
   location              = var.location
-  resource_group_name   = "${azurerm_resource_group.resource.name}"
-  network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index)}"]
+  resource_group_name   = azurerm_resource_group.resource.name
+  network_interface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
   vm_size               = var.node-size
 
   storage_os_disk {
@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine" "redis-nodes" {
     disable_password_authentication = true
     ssh_keys {
       path     = "/home/${var.ssh-user}/.ssh/authorized_keys"
-      key_data = "${file(var.ssh-key)}"
+      key_data = file(var.ssh-key)
     }
   }
 
