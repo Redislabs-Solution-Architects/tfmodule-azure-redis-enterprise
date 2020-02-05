@@ -1,6 +1,5 @@
 # Common to all locations in cluster
 av_zone                         = ["1","2"]
-net-name                        = "redis-test"
 cluster-base-domain             = "useast2.kaiser.guru"
 cluster-name                    = "redis-test-mgk"
 username                        = "demo@redislabs.com"
