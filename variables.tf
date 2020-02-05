@@ -90,15 +90,6 @@ variable "node-count" {
   default     = 3
 }
 
-variable "common-tags" {
-  description = "A map of the tags to use for the resources that are deployed"
-  type        = map
-
-  default = {
-    config = "terraform"
-  }
-}
-
 variable "ssh-user" {
   description = "The SSH User"
   default     = "redislabs"
@@ -121,14 +112,42 @@ variable "demodb-name" {
   description = "The name of a demo database to create after cluster setup."
 }
 
+variable "cost_center" {
+    type = string
+}
+
+variable "business_unit" {
+    type = string	
+}
+
+variable "owner" {
+    type = string
+}
+
+variable "platform_application" {
+    type = string
+}
+
+variable "compliance_data_profile" {
+    type = string	
+}
+
+variable "data_sovereignty_location" {
+    type = string	
+}
+
+variable "environment" {
+    type = string	
+}
+
 locals {
   tags = {
-		cost_center = "${var.cost_center}"
-		business_unit = "${var.business_unit}"
+		cost-center = "${var.cost_center}"
+		business-unit = "${var.business_unit}"
 		owner = "${var.owner}"
 		environment = "${var.environment}"
-		platform_application = "${var.platform_application}"
-		compliance_data_profile = "${var.compliance_data_profile}"
-		data_sovereignty_location = "${var.data_sovereignty_location}"
+		platform-application = "${var.platform_application}"
+		compliance-data-profile = "${var.compliance_data_profile}"
+		data-sovereignty-location = "${var.data_sovereignty_location}"
 	}
 }

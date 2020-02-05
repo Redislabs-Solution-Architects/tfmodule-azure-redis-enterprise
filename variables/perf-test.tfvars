@@ -4,7 +4,6 @@ net-name    = "redis-test"
 net-cidr    = ["10.0.2.0/24"]
 node-count  = 7
 node-size   = "Standard_DS5_v2" # Standard_D13_v2 # Standard_E8as_v3 # Standard_DS13_v2
-common-tags = { Config = "terraform", Environment = "tf-test" }
 cluster-base-domain = "azure.redis.life"
 cluster-name = "redis-test"
 password = "EVENmoarSECURE"

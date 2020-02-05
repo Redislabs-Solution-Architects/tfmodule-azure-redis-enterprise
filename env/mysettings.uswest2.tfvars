@@ -5,7 +5,6 @@ cluster-resource-group          = "azusw2-redis-test"
 net-cidr                        = ["10.0.3.0/24"]
 node-count                      = 3
 node-size                       = "Standard_DS4_v2"
-common-tags                     = { Config = "terraform", Environment = "tf-test" }
 cluster-base-domain             = "uswest2.kaiser.guru"
 cluster-base-resource-group     = "azuse-kaiserguru-dns-rg-prod"
 cluster-name                    = "redis-test-mgk"
