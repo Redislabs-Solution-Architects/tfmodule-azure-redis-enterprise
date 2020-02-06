@@ -19,15 +19,14 @@ resource "null_resource" "remote-config" {
       user        = var.ssh-user
       host        = data.azurerm_public_ip.fixedip[0].ip_address
       private_key = file(replace(var.ssh-key, ".pub", ""))
-      agent       = true
+      agent       = false
     }
     inline = ["set -x",
               "${ local.install_step}",
               "/opt/redislabs/bin/rladmin cluster create name ${var.cluster-name}.${var.cluster-base-domain} username ${var.username} password ${var.password} rack_aware rack_id rack-1",
-              "/opt/redislabs/bin/rladmin node 1 external_addr set ${data.azurerm_public_ip.fixedip[0].ip_address}", 
-              "sudo firewall-cmd --add-service=redislabs-clients",
+              "/opt/redislabs/bin/rladmin node 1 external_addr set ${data.azurerm_public_ip.fixedip[0].ip_address}",               
               "${ local.short_pause }" ]
-  }
+  }    
   depends_on = [ azurerm_dns_ns_record.fixedip ]
 }
 
@@ -38,7 +37,7 @@ resource "null_resource" "remote-config-nodes" {
       user        = var.ssh-user
       host        = element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)
       private_key = file(replace(var.ssh-key, ".pub", ""))
-      agent       = true
+      agent       = false
     }
 
     inline = [ "set -x",
@@ -47,4 +46,20 @@ resource "null_resource" "remote-config-nodes" {
               "/opt/redislabs/bin/rladmin node ${count.index + 2} external_addr set ${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)}" ]
   }
   depends_on = [ null_resource.remote-config ]
+}
+
+resource "null_resource" "remote-config-firewall" {  
+  count = var.node-count
+  provisioner "remote-exec" {
+    connection {
+      user        = var.ssh-user
+      host        = element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)
+      private_key = file(replace(var.ssh-key, ".pub", ""))
+      agent       = false
+    }
+
+    inline = [ "set -x",
+               "sudo firewall-cmd --add-service=redislabs-clients" ]
+  }
+  depends_on = [ null_resource.remote-config-nodes ]
 }
