@@ -25,6 +25,7 @@ resource "null_resource" "remote-config" {
               "${ local.install_step}",
               "/opt/redislabs/bin/rladmin cluster create name ${var.cluster-name}.${var.cluster-base-domain} username ${var.username} password ${var.password} rack_aware rack_id rack-1",
               "/opt/redislabs/bin/rladmin node 1 external_addr set ${data.azurerm_public_ip.fixedip[0].ip_address}", 
+              "sudo firewall-cmd --add-service=redislabs-clients",
               "${ local.short_pause }" ]
   }
   depends_on = [ azurerm_dns_ns_record.fixedip ]
