@@ -116,5 +116,6 @@ locals {
 		platform-application = "${var.platform_application}"
 		compliance-data-profile = "${var.compliance_data_profile}"
 		data-sovereignty-location = "${var.data_sovereignty_location}"
+    terraform-script = "terraform-azure"
 	}
 }
