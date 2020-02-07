@@ -1,141 +1,144 @@
 variable "location" {
-  description = "The location where resources will be created"
+  description = "Identity: The location where resources will be created"
   default = "west2us"
 }
 
-variable av_zone {
-  description = "A list of availability zones to use. Make sure they're valid for this location."
-  default = ["1","2"]
-}
-
-variable "net-cidr" {
-  description = "The CIDR blocks to be used in the network"
-  type        = list
-  default     = ["10.0.1.0/24"]
-}
-
-variable "net-name" {
-  description = "The name to be associated with the network"
-  default = "redisentpoc"
-}
-
 variable "cluster-name" {
-  description = "The domain name for the cluster (in front of the cluster-base-domain)."
+  description = "Identity: The domain name for the cluster (in front of the cluster-base-domain)."
   default = "redisentpoc"
 }
 
 variable "cluster-base-domain" {
-  description = "A base domain name you own. Helpful if it's managed by a zone file in Azure."
+  description = "Identity: A base domain name you own. Helpful if it's managed by a zone file in Azure."
   default = "azure.redis.life"
 }
 
 variable "cluster-base-resource-group" {
-  description = "The resource group that contains the zone file for the cluster-base-domain."
+  description = "Identity: The resource group that contains the zone file for the cluster-base-domain."
   default = null
 }
 
 variable "cluster-resource-group" {
-  description = "Resource group for the cluster."
+  description = "Identity: Resource group for the cluster."
   default = null
+}
+
+variable av_zone {
+  description = "Network: A list of availability zones to use. Make sure they're valid for this location."
+  default = ["1","2"]
+}
+
+variable "net-cidr" {
+  description = "Network: The CIDR blocks to be used in the network"
+  type        = list
+  default     = ["10.0.1.0/24"]
+}
+
+variable "subnet-count" {
+  description = "Networking: The number of subnets to spin up"
+  default     = 2
+}
+
+variable "net-name" {
+  description = "Network: The name to be associated with the network"
+  default = "redisentpoc"
 }
 
 variable "username" {
-  
+  description = "Demo: The username to use for the cluster adminstrator"  
 }
 
 variable "password" {
-  
+  description = "Demo: The password to use as the cluster administrator"
 }
 
-# TODO: Make this work. Currently unused.
 variable "re-license" {
-  description = "License Key for non-trial licensing"
+  description = "Demo: License Key for non-trial licensing"
   default = null
 }
 
+variable "demodb-name" {
+  default = null
+  description = "Demo: The name of a demo database to create after cluster setup."
+}
+
 variable "node-size" {
-  description = "The Size of the VM to run for nodes."
+  description = "Provisioning: The Size of the VM to run for nodes."
   default     = "Standard_DS_v2"
 }
 
-# NOTE that you can't change this without changing parts of the provisioning scripts.
 variable "node-publisher" {
-  description = "The owner of the image"
+  description = "Provisioning: The owner of the image"
   default     = "RedHat"
 }
 
 variable "node-offer" {
-  description = "The type of the image"
+  description = "Provisioning: The type of the image"
   default     = "RHEL"
 }
 
 variable "node-sku" {
-  description = "The SKU of the image"
+  description = "Provisioning: The SKU of the image"
   default     = "7-RAW"
 }
 
 variable "node-version" {
-  description = "The version of the image"
+  description = "Provisioning: The version of the image"
   default     = "latest"
 }
 
-variable "subnet-count" {
-  description = "The number of subnets to spin up"
-  default     = 2
-}
-
-variable "node-count" {
-  description = "The number of nodes to spin up"
-  default     = 3
-}
-
 variable "ssh-user" {
-  description = "The SSH User"
+  description = "Provisioning: The SSH user used to deploy software to the nodes"
   default     = "redislabs"
 }
 
 variable "ssh-key" {
-  description = "The SSH Public Key path"
+  description = "Provisioning: The SSH public key path used to deploy software to the nodes"
   default     = "~/.ssh/id_rsa_azure.pub"
 }
 
-# Use this to determine what version of the software gets installed
+variable "node-count" {
+  description = "Provisioning: The number of nodes to spin up"
+  default     = 3
+}
+
 variable "re-download-url" {
-  description = "The download link for the redis enterprise software"
+  description = "Provisioning: The download link for the redis enterprise software"
   default     = null
 }
 
-# TODO: Make this take a list or a map of db and properties?
-variable "demodb-name" {
-  default = null
-  description = "The name of a demo database to create after cluster setup."
-}
-
 variable "cost_center" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string
 }
 
 variable "business_unit" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string	
 }
 
 variable "owner" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string
 }
 
 variable "platform_application" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string
 }
 
 variable "compliance_data_profile" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string	
 }
 
 variable "data_sovereignty_location" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string	
 }
 
 variable "environment" {
+    description = "Tag: Required by InComm Cloud Governance"
     type = string	
 }
 

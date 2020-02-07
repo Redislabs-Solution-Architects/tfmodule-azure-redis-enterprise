@@ -47,6 +47,6 @@ redis-cli -h "YOURDBADDRESS" -p PORTNUMBER -a PASSWORD
 
 ## Generate Documentation
 ```BASH
-terraform-docs markdown --sort-inputs-by-required ./modules/redis > docs/redis.md
-terraform-docs markdown --sort-inputs-by-required . > docs/main.md
+terraform-docs markdown --no-sort ./modules/redis > docs/redis.md
+terraform-docs markdown --no-sort . > docs/main.md
 ```
