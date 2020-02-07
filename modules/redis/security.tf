@@ -33,6 +33,18 @@ resource "azurerm_network_security_group" "sg" {
   }
 
   security_rule {
+    name                       = "Sync"
+    priority                   = 1004
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "20001-29999"
+    source_address_prefix      = "*"    
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
     name                       = "DBs"
     priority                   = 1005
     direction                  = "Inbound"
@@ -40,7 +52,7 @@ resource "azurerm_network_security_group" "sg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "10001-19999"
-    source_address_prefix      = "${chomp(data.http.myip.body)}/32"
+    source_address_prefix      = "*"    
     destination_address_prefix = "*"
   }
 
