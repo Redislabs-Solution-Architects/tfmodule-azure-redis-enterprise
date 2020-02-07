@@ -1,5 +1,4 @@
 variable locations {
-  description = "One or more locations to setup Redis clusters"
   default = [
     {
       location                        = "eastus2"
@@ -31,11 +30,11 @@ variable "cluster-base-domain" {
 }
 
 variable "username" {
-  description = "Username for the Redis Cluster"  
+  
 }
 
 variable "password" {
-  description = "Password for the Redis Cluster"  
+  
 }
 
 variable "re-license" {
