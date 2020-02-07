@@ -54,5 +54,5 @@ terraform-docs markdown --no-sort . > docs/main.md
 ## Redis CLI
 ```BASH
 npm install -g redis-cli
-rdcli -h redis-10002.redis-test-west.kaiser.guru -p 10002 -a p@ssw0rd!
+rdcli -h redis-12000.redis-test-west.kaiser.guru -p 12000 -a p@ssw0rd!
 ```
