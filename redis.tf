@@ -51,6 +51,7 @@ module "redis_cluster-uswest2"  {
     re-download-url                 = var.re-download-url
     demodb-name                     = var.demodb-name
     node-size                       = var.node-size
+    re-license                      = var.re-license
 
     # Tags
     cost_center                     = var.cost_center

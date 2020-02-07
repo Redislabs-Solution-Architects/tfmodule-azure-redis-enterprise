@@ -50,3 +50,9 @@ redis-cli -h "YOURDBADDRESS" -p PORTNUMBER -a PASSWORD
 terraform-docs markdown --no-sort ./modules/redis > docs/redis.md
 terraform-docs markdown --no-sort . > docs/main.md
 ```
+
+## Redis CLI
+```BASH
+npm install -g redis-cli
+rdcli -h redis-10002.redis-test-west.kaiser.guru -p 10002 -a p@ssw0rd!
+```

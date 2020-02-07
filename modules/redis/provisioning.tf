@@ -8,7 +8,6 @@ locals {
   install_step = "[ ! -f '/var/tmp/install.sh' ] && cd /var/tmp && wget ${var.re-download-url} && tar -xvf redislabs*.tar && sudo -s ./install.sh -y"  
   short_pause = "sleep 10"
   other_node ="/opt/redislabs/bin/rladmin cluster join nodes ${azurerm_network_interface.nic[0].private_ip_address} username ${var.username} password ${var.password}"
-
 }
 
 # See bug in https://github.com/terraform-providers/terraform-provider-azurerm/issues/310
