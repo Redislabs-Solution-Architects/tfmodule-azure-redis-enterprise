@@ -6,14 +6,14 @@ module "redis_cluster-useast2"  {
     # Unique to the location
     location                        = element(var.locations, 0).location
     cluster-resource-group          = element(var.locations, 0).cluster-resource-group
-    net-cidr                        = element(var.locations, 0).net-cidr
-    cluster-base-domain             = element(var.locations, 0).cluster-base-domain
+    net-cidr                        = element(var.locations, 0).net-cidr    
     net-name                        = element(var.locations, 0).net-name
+    cluster-name                    = element(var.locations, 0).cluster-name
 
     # Common to all locations in our cluster
+    cluster-base-domain             = var.cluster-base-domain
     cluster-base-resource-group     = "azuse-kaiserguru-dns-rg-prod"
-    av_zone                         = var.av_zone    
-    cluster-name                    = var.cluster-name
+    av_zone                         = var.av_zone        
     username                        = var.username
     password                        = var.password    
     re-download-url                 = var.re-download-url
@@ -38,14 +38,14 @@ module "redis_cluster-uswest2"  {
     # Unique to the location
     location                        = element(var.locations, 1).location
     cluster-resource-group          = element(var.locations, 1).cluster-resource-group
-    net-cidr                        = element(var.locations, 1).net-cidr
-    cluster-base-domain             = element(var.locations, 1).cluster-base-domain
+    net-cidr                        = element(var.locations, 1).net-cidr    
     net-name                        = element(var.locations, 1).net-name
+    cluster-name                    = element(var.locations, 1).cluster-name
 
     # Common to all locations in our cluster
-    cluster-base-resource-group     = "azuse-kaiserguru-dns-rg-prod"
-    av_zone                         = var.av_zone    
-    cluster-name                    = var.cluster-name
+    cluster-base-domain             = var.cluster-base-domain
+    cluster-base-resource-group     = var.cluster-base-resource-group
+    av_zone                         = var.av_zone        
     username                        = var.username
     password                        = var.password    
     re-download-url                 = var.re-download-url

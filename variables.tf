@@ -4,16 +4,16 @@ variable locations {
     {
       location                        = "eastus2"
       cluster-resource-group          = "azuse2-redis-test"    
-      net-cidr                        = ["10.0.2.0/24"]
-      cluster-base-domain             = "useast2.kaiser.guru"
-      net-name                        = "redis-test-eastus2"      
+      net-cidr                        = ["10.0.2.0/24"]      
+      net-name                        = "redis-test-eastus2"    
+      cluster-name                    = "redis-test-east"  
     },
     {
       location                        = "westus2"
       cluster-resource-group          = "azusw2-redis-test"    
-      net-cidr                        = ["10.0.3.0/24"]
-      cluster-base-domain             = "uswest2.kaiser.guru"        
-      net-name                        = "redis-test-westus2"      
+      net-cidr                        = ["10.0.3.0/24"]      
+      net-name                        = "redis-test-westus2"
+      cluster-name                    = "redis-test-west"        
     }
   ]
 }
@@ -22,8 +22,8 @@ variable av_zone {
   description = "Identity: A list of availability zones to use. Make sure they're valid for this location." 
 }
 
-variable "cluster-name" {
-  description = "Identity: The domain name for the cluster (in front of the cluster-base-domain)."  
+variable "cluster-base-resource-group" {
+  description = "Identity: Resource group where the DNS lives."  
 }
 
 variable "cluster-base-domain" {
