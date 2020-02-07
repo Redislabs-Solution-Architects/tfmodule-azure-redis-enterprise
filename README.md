@@ -48,5 +48,9 @@ You can use the web address of any of the nodes (in the terraform output) to acc
 redis-cli -h "YOURDBADDRESS" -p PORTNUMBER -a PASSWORD
 ```
 
-
+## Generate Documentation
+```BASH
+terraform-docs markdown --sort-inputs-by-required ./modules/redis > docs/redis.md
+terraform-docs markdown --sort-inputs-by-required . > docs/main.md
+```
 
