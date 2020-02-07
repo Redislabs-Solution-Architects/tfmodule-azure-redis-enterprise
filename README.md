@@ -53,4 +53,3 @@ redis-cli -h "YOURDBADDRESS" -p PORTNUMBER -a PASSWORD
 terraform-docs markdown --sort-inputs-by-required ./modules/redis > docs/redis.md
 terraform-docs markdown --sort-inputs-by-required . > docs/main.md
 ```
-
