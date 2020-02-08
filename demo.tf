@@ -4,8 +4,8 @@ locals {
       "default_db_config": {
         "name": "cluster-crdb",
         "bigstore": false,
-        "replication": true,
-        "memory_size": 1024000000,
+        "replication": true,        
+        "memory_size": 4294967296,
         "snapshot_policy": [],
         "shards_count": 2,
         "shard_key_regex": [{          

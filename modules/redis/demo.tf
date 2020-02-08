@@ -8,7 +8,7 @@ locals {
   {
 	  "name": "${var.demodb-name}",
 	  "type": "redis",
-	  "memory_size": 20000000000,
+	  "memory_size": 2000000000,
 	  "replication": true
   }
   EOF
