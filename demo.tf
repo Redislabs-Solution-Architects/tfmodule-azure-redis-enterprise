@@ -5,7 +5,7 @@ locals {
         "name": "cluster-crdb",
         "bigstore": false,
         "replication": true,        
-        "memory_size": 4294967296,
+        "memory_size": 10737418240,
         "snapshot_policy": [],
         "shards_count": 2,
         "shard_key_regex": [{          
@@ -56,6 +56,7 @@ resource "null_resource" "create-CRDB" {
       "${chomp(local.create-crdb-script)}"      
     ]  
   }
+  # Add A Destroy Provisioner...
   depends_on = [ azurerm_virtual_network_peering.peering-uswest2, azurerm_virtual_network_peering.peering-useast2, module.redis_cluster-useast2 ]
 }
 

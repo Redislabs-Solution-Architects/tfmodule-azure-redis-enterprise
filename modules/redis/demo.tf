@@ -44,6 +44,7 @@ resource "null_resource" "create-demo" {
         "${chomp(local.create-demo-script)}"
     ]  
   }
+  # Add A Destroy Provisioner...
   depends_on = [ null_resource.remote-config-nodes ]
 }
 
