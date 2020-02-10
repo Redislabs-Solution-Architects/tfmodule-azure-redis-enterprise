@@ -12,32 +12,18 @@ You can also use this to set up two clusters in two separate Azure regions; thes
 az login
 ```
 
-## Step One: Prepare your inputs
-
-Pick one of the example tfvars to use (small is... smaller, and perf-test is for running performance tests. Example is generically pretty good.)
-
-```BASH
-cp example.tfvars mysettings.tfvars
-```
-
 ## Initialize terraform using Azure Storage
 ```BASH
 terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=x7VnVoswQvNA0M79JRGAaLhqZ32/PVNzFLSQCRT4ZKkW19NC4q9jFsFrrSGB5L2XVMAiwm487iLwyVLVc1Q1LQ==" -backend-config="key=redis.terraform-azure.tfstate"
 ```
 
-Make sure to update the variables in terraform.tfvars, especially `password` and `cluster-base-domain`. It's simplest if you have a spare domain name for demos, as this recipe will set up a complete zone file, but you can use a delegated subzone instead. If you host DNS for the base domain in Azure, specify the resource group that the zone file is in with `cluster-base-resource-group` and this will add A and NS records to that zone file (instead of setting up a complete zone).
-
-Make sure that you're using an ssh key without a passphrase. (If necessary, create a new SSH key using `ssh-keygen` and change the `ssh-key` variable to match.)
-
-## Step Two: Apply
+## Apply
 
 ```BASH
 terraform apply --parallelism=20 
 ```
 
-Once the apply has finished, you might need to add NS records (either for the domain or delegated subzone) to your upstream DNS.
-
-## Step Three: Log in
+## Log in
 
 You can use the web address of any of the nodes (in the terraform output) to access the web interface. If you set the `demodb-name` variable, then you can try connecting to that database immediately:
 

@@ -12,9 +12,10 @@ locals {
 	  "replication": true
   }
   EOF
-  create-license-script   = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'Content-Type: application/json' -X PUT  https://127.0.0.1:9443/v1/license -d '${jsonencode(jsondecode(replace(replace(local.create-license-json, "\r", ""),"\n","")))}'"     
-  create-demo-script      = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'Content-Type: application/json' -X POST https://127.0.0.1:9443/v1/bdbs -d '${jsonencode(jsondecode(replace(replace(local.create-demo-json, "\r", ""),"\n","")))}'"     
-  #-H 'Authorization: Basic dGVzdEByZWRpc2xhYnMuY29tOnJlZGlzbGFicw==' -H 'Content-Type: application/json' 
+  create-license-script   = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'cache-control: no-cache' -H 'Content-Type: application/json' -X PUT  https://127.0.0.1:9443/v1/license -d '${jsonencode(jsondecode(replace(replace(local.create-license-json, "\r", ""),"\n","")))}'"     
+  create-demo-script      = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'cache-control: no-cache' -H 'Content-Type: application/json' -X POST https://127.0.0.1:9443/v1/bdbs -d '${jsonencode(jsondecode(replace(replace(local.create-demo-json, "\r", ""),"\n","")))}' "     
+  destroy-demo-script     = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'cache-control: no-cache' -H 'Content-type: application/json' -X DELETE https://127.0.0.1:9443/v1/bdbs/`${local.get-database-id-script}`"
+  get-database-id-script  = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'cache-control: no-cache' -H 'Content-type: application/json' -X GET https://127.0.0.1:9443/v1/bdbs | jq -M '.[] | select(.name!='${var.demodb-name}') | .uid'"  
 }
 
 resource "null_resource" "create-license" {  
@@ -44,7 +45,22 @@ resource "null_resource" "create-demo" {
         "${chomp(local.create-demo-script)}"
     ]  
   }
+
+  /*
+  provisioner "remote-exec" {
+    when    = destroy
+    connection {
+      user        = var.ssh-user
+      host        = data.azurerm_public_ip.fixedip[0].ip_address
+      private_key = file(replace(var.ssh-key, ".pub", ""))
+      agent       = false
+    }
+    inline = [
+        "${chomp(local.destroy-demo-script)}"
+    ]  
+  }
+  */
+
   # Add A Destroy Provisioner...
   depends_on = [ null_resource.remote-config-nodes ]
 }
-
