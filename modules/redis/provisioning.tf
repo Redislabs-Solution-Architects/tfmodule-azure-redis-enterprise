@@ -62,3 +62,28 @@ resource "null_resource" "remote-config-firewall" {
   }
   depends_on = [ null_resource.remote-config-nodes ]
 }
+
+resource "null_resource" "remote-config-client" {  
+  provisioner "remote-exec" {
+    connection {
+      user        = var.ssh-user
+      host        = data.azurerm_public_ip.fixedip-client.ip_address
+      private_key = file(replace(var.ssh-key, ".pub", ""))
+      agent       = false
+    }
+
+    inline = [ 
+      "wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb",
+      "sudo dpkg -i packages-microsoft-prod.deb",
+      "rm packages-microsoft-prod.deb",
+      "sudo apt-get update --yes",
+      "sudo apt-get install apt-transport-https --yes",
+      "sudo apt-get update",
+      "sudo apt-get install dotnet-runtime-3.0 --yes",
+      "sudo apt-get update",
+      "sudo apt-get install aspnetcore-runtime-3.0",
+      "sudo apt install unzip --yes"
+    ]
+  }
+  depends_on = [ null_resource.remote-config ]
+}

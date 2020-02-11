@@ -13,6 +13,20 @@ resource "azurerm_dns_a_record" "fixedip" {
   }
 }
 
+resource "azurerm_dns_a_record" "fixedip-client" {
+  provider            = azurerm.azurerm_vs  
+  name                = "client-${var.cluster-name}"
+  zone_name           = var.cluster-base-domain
+  resource_group_name = (var.cluster-base-resource-group != null ? var.cluster-base-resource-group : azurerm_resource_group.resource.name)
+  records             =  [ data.azurerm_public_ip.fixedip-client.ip_address]  
+  ttl                 = 300
+  lifecycle {
+    ignore_changes = [      
+      records
+    ]
+  }
+}
+
 resource "azurerm_dns_ns_record" "fixedip" { 
   provider            = azurerm.azurerm_vs
   name                = var.cluster-name

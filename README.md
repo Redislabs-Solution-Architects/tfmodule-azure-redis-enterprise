@@ -42,3 +42,13 @@ terraform-docs markdown --no-sort . > docs/main.md
 npm install -g redis-cli
 rdcli -h redis-12000.redis-test-west.kaiser.guru -p 12000 -a p@ssw0rd!
 ```
+
+
+
+## Useful CRDB stuff
+```BASH
+ssh redislabs@ns1-redis-test-east.kaiser.guru -i ~/.ssh/id_rsa_azure
+crdb-cli list
+crdb-cli crdb flush --crdb-guid 9f4c453b-c324-4c64-87a7-63302bcac4c3
+crdbtop 9f4c453b-c324-4c64-87a7-63302bcac4c3
+```

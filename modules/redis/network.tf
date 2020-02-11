@@ -47,10 +47,39 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
+resource "azurerm_public_ip" "fixedip-client" {  
+  name                = "${var.net-name}-client"
+  location            = var.location
+  zones               = [element(var.av_zone, 0)]
+  resource_group_name = azurerm_resource_group.resource.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "nic-client" {  
+  name                      = "${var.net-name}-client"
+  location                  = var.location
+  resource_group_name       = azurerm_resource_group.resource.name
+  network_security_group_id = azurerm_network_security_group.sg.id  
+
+  ip_configuration {
+    name                          = "${var.net-name}-client"
+    subnet_id                     = element(azurerm_subnet.subnet.*.id, 0)
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.fixedip-client.id
+  }
+}
+
 data "azurerm_public_ip" "fixedip" {
   count               = var.node-count
   name                = element(azurerm_public_ip.fixedip.*.name, count.index)
   zones               = [element(var.av_zone, count.index)]
   resource_group_name = azurerm_resource_group.resource.name
   depends_on          = [ azurerm_virtual_machine.redis-nodes, azurerm_network_interface.nic ]
+}
+
+data "azurerm_public_ip" "fixedip-client" {  
+  name                = azurerm_public_ip.fixedip-client.name
+  zones               = [element(var.av_zone, 0)]
+  resource_group_name = azurerm_resource_group.resource.name
+  depends_on          = [ azurerm_virtual_machine.redis-client, azurerm_network_interface.nic-client ]
 }
