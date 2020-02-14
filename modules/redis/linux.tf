@@ -3,7 +3,7 @@ resource "azurerm_virtual_machine" "redis-client" {
   location              = var.location
   resource_group_name   = azurerm_resource_group.resource.name
   network_interface_ids = [ azurerm_network_interface.nic-client.id ]
-  vm_size               = "Standard_B2s"
+  vm_size               = "Standard_D2s_v3"
 
   storage_os_disk {
     name              = "${var.net-name}-client"
