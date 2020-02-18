@@ -43,8 +43,6 @@ npm install -g redis-cli
 rdcli -h redis-12000.redis-test-west.kaiser.guru -p 12000 -a p@ssw0rd!
 ```
 
-
-
 ## Useful CRDB stuff
 ```BASH
 ssh redislabs@ns1-redis-test-east.kaiser.guru -i ~/.ssh/id_rsa_azure

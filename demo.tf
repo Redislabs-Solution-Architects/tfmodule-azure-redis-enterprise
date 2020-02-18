@@ -56,8 +56,8 @@ resource "null_resource" "create-CRDB" {
       "${chomp(local.create-crdb-script)}"      
     ]  
   }
-  # Add A Destroy Provisioner...
-  depends_on = [ azurerm_virtual_network_peering.peering-uswest2, azurerm_virtual_network_peering.peering-useast2, module.redis_cluster-useast2 ]
+
+  depends_on = [ azurerm_virtual_network_peering.peering-uswest2, azurerm_virtual_network_peering.peering-useast2, module.redis_cluster-useast2, module.redis_cluster-uswest2  ]
 }
 
 

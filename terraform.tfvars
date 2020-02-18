@@ -25,3 +25,19 @@ environment                     = "POC"
 platform_application            = "Serve"
 compliance_data_profile         = "NON-PCI"
 data_sovereignty_location       = "US"
+locations                       = [
+                                    {
+                                        location                        = "eastus2"
+                                        cluster-resource-group          = "azuse2-redis-test"    
+                                        net-cidr                        = ["10.0.2.0/24"]      
+                                        net-name                        = "redis-test-eastus2"    
+                                        cluster-name                    = "redis-test-east"  
+                                    },
+                                    {
+                                        location                        = "westus2"
+                                        cluster-resource-group          = "azusw2-redis-test"    
+                                        net-cidr                        = ["10.0.3.0/24"]      
+                                        net-name                        = "redis-test-westus2"
+                                        cluster-name                    = "redis-test-west"        
+                                    }
+                                ]

@@ -1,21 +1,5 @@
 variable locations {
-  description = "Identity: A list of locations to install clusters and some details to facilitate the install"
-  default = [
-    {
-      location                        = "eastus2"
-      cluster-resource-group          = "azuse2-redis-test"    
-      net-cidr                        = ["10.0.2.0/24"]      
-      net-name                        = "redis-test-eastus2"    
-      cluster-name                    = "redis-test-east"  
-    },
-    {
-      location                        = "westus2"
-      cluster-resource-group          = "azusw2-redis-test"    
-      net-cidr                        = ["10.0.3.0/24"]      
-      net-name                        = "redis-test-westus2"
-      cluster-name                    = "redis-test-west"        
-    }
-  ]
+  description = "Identity: A list of locations to install clusters and some details to facilitate the install"  
 }
 
 variable av_zone {
