@@ -1,4 +1,4 @@
-name: CI
+name: Deploy to Azure
 
 on: [push]
 
@@ -9,9 +9,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    - name: Terraform Init
+      run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=x7VnVoswQvNA0M79JRGAaLhqZ32/PVNzFLSQCRT4ZKkW19NC4q9jFsFrrSGB5L2XVMAiwm487iLwyVLVc1Q1LQ==" -backend-config="key=redis.terraform-azure.tfstate"
+    - name: Terraform Validate
+      run: terraform validate
+        
