@@ -32,11 +32,6 @@ variable "demodb-name" {
   description = "Demo: The name of a demo database to create after cluster setup."
 }
 
-variable "re-license" {  
-  description = "Demo: License Key for non-trial licensing"  
-  default     = null
-}
-
 variable "node-size" {
   description = "Provisioning: The Size of the VM to run for nodes."
   default     = "Standard_DS4_v2"
@@ -55,6 +50,10 @@ variable "ssh-user" {
 variable "ssh-key" {
   description = "Provisioning: The SSH public key path used to deploy software to the nodes"
   default     = "~/.ssh/id_rsa_azure.pub"
+}
+
+variable "ssh-allowip" {
+  description = "Provisioning: IP Addresses from which to allow SSH traffic"  
 }
 
 variable "re-download-url" {

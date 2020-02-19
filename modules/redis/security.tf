@@ -7,16 +7,28 @@ resource "azurerm_network_security_group" "sg" {
   name                = var.net-name
   location            = var.location
   resource_group_name = azurerm_resource_group.resource.name
-
-  security_rule {
+  
+  security_rule {    
     name                       = "SSH"
-    priority                   = 1001
+    priority                   = 801
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "${chomp(data.http.myip.body)}/32"
+    source_address_prefix      = "${element(var.ssh-allowip, 0)}/32"    
+    destination_address_prefix = "*"
+  }
+
+  security_rule {    
+    name                       = "SSH"
+    priority                   = 802
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "${element(var.ssh-allowip, 1)}/32"    
     destination_address_prefix = "*"
   }
 
