@@ -9,7 +9,7 @@ resource "azurerm_network_security_group" "sg" {
   resource_group_name = azurerm_resource_group.resource.name
   
   security_rule {    
-    name                       = "SSH"
+    name                       = "SSH-Serve"
     priority                   = 801
     direction                  = "Inbound"
     access                     = "Allow"
@@ -21,7 +21,7 @@ resource "azurerm_network_security_group" "sg" {
   }
 
   security_rule {    
-    name                       = "SSH"
+    name                       = "SSH-Mgk"
     priority                   = 802
     direction                  = "Inbound"
     access                     = "Allow"
