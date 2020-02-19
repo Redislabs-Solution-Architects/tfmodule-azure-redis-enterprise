@@ -39,7 +39,7 @@ variable "node-size" {
 
 variable "node-count" {
   description = "Provisioning: The number of nodes to spin up"
-  default     = 5
+  default     = 3
 }
 
 variable "ssh-user" {
