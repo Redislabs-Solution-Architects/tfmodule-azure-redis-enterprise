@@ -13,8 +13,3 @@ jobs:
       run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=x7VnVoswQvNA0M79JRGAaLhqZ32/PVNzFLSQCRT4ZKkW19NC4q9jFsFrrSGB5L2XVMAiwm487iLwyVLVc1Q1LQ==" -backend-config="key=redis.terraform-azure.tfstate"
     - name: Terraform Validate
       run: terraform validate
-    - name: Terraform Plan
-      run: terraform plan --parallelism=20 
-    - name: Terraform Apply
-      run: terraform apply --parallelism=20 --auto-approve
-        
