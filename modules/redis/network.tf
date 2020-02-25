@@ -12,7 +12,7 @@ resource "azurerm_virtual_network" "network" {
 }
 
 output "network_id" {
-  value = azurerm_virtual_network.network.id
+  value = azurerm_virtual_network.network.idz`
 }
 
 resource "azurerm_subnet" "subnet" {
