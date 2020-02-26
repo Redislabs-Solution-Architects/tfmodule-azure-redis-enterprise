@@ -21,29 +21,17 @@ resource "azurerm_network_security_group" "sg" {
   }
   
   security_rule {    
-    name                       = "SSH-Serve"
+    name                       = "SSH"
     priority                   = 801
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "${element(var.ssh-allowip, 0)}/32"    
+    source_address_prefix      = concat(var.ssh-allowip, ["${chomp(data.http.myip.body)}/32"])
     destination_address_prefix = "*"
   }
-
-  security_rule {    
-    name                       = "SSH-Mgk"
-    priority                   = 802
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "22"
-    source_address_prefix      = "${element(var.ssh-allowip, 1)}/32"    
-    destination_address_prefix = "*"
-  }
-
+  
   security_rule {
     name                       = "HTTPS-UI"
     priority                   = 1000

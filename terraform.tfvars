@@ -15,7 +15,7 @@ environment                     = "POC"
 platform_application            = "Serve"
 compliance_data_profile         = "NON-PCI"
 data_sovereignty_location       = "US"
-ssh-allowip                     = ["50.238.128.77", "35.138.147.194"]
+ssh-allowip                     = ["50.238.128.77/32", "35.138.147.194/32"]
 locations                       = [
                                     {
                                         location                        = "eastus2"

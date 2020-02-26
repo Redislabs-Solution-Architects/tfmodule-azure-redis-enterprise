@@ -94,6 +94,7 @@ variable "ssh-key" {
 
 variable "ssh-allowip" {
   description = "Provisioning: IP Addresses from which to allow SSH traffic"  
+  type = "list"
 }
 
 variable "node-count" {
