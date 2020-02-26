@@ -7,7 +7,7 @@ resource "azurerm_virtual_machine" "redis-client" {
   vm_size               = "Standard_D2s_v3"
 
   storage_os_disk {
-    name              = "${var.net-name}-client"
+    name              = "${var.net-name}-client-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -22,7 +22,7 @@ resource "azurerm_virtual_machine" "redis-client" {
   }
 
   os_profile {
-    computer_name  = "${var.net-name}-client"
+    computer_name  = "${var.net-name}-client-${count.index}"
     admin_username = var.ssh-user
   }
 

@@ -16,10 +16,10 @@ resource "azurerm_dns_a_record" "fixedip" {
 resource "azurerm_dns_a_record" "fixedip-client" {
   count               = var.client-count
   provider            = azurerm.azurerm_vs  
-  name                = "client-${var.cluster-name}"
+  name                = "client-${var.cluster-name}-${count.index}"
   zone_name           = var.cluster-base-domain
-  resource_group_name = (var.cluster-base-resource-group != null ? var.cluster-base-resource-group : azurerm_resource_group.resource.name)
-  records             =  [ data.azurerm_public_ip.fixedip-client.*.ip_address]  
+  resource_group_name = (var.cluster-base-resource-group != null ? var.cluster-base-resource-group : azurerm_resource_group.resource.name)  
+  records             =  [ element(data.azurerm_public_ip.fixedip-client.*.ip_address, count.index) ]  
   ttl                 = 300
   lifecycle {
     ignore_changes = [      
