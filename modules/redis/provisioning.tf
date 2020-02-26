@@ -65,7 +65,7 @@ resource "null_resource" "remote-config-firewall" {
 
 resource "null_resource" "remote-config-client" {  
   count = var.client-count
-  provisioner "remote-exec" {ssh 
+  provisioner "remote-exec" { 
     connection {
       user        = var.ssh-user      
       host        = element(data.azurerm_public_ip.fixedip-client.*.ip_address, count.index + 1)
