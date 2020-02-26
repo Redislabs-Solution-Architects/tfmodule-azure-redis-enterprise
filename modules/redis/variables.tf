@@ -141,6 +141,11 @@ variable "environment" {
     type = string	
 }
 
+variable "client-count" {    
+    type    = string	
+    default = 2
+}
+
 locals {
   tags = {
 		cost-center = "${var.cost_center}"

@@ -48,7 +48,8 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_public_ip" "fixedip-client" {  
-  name                = "${var.net-name}-client"
+  count               = var.client-count
+  name                = "${var.net-name}-client-${count.index}"
   location            = var.location
   zones               = [element(var.av_zone, 0)]
   resource_group_name = azurerm_resource_group.resource.name
@@ -56,16 +57,17 @@ resource "azurerm_public_ip" "fixedip-client" {
 }
 
 resource "azurerm_network_interface" "nic-client" {  
-  name                      = "${var.net-name}-client"
+  count                     = var.client-count
+  name                      = "${var.net-name}-client-${count.index}"
   location                  = var.location
   resource_group_name       = azurerm_resource_group.resource.name
   network_security_group_id = azurerm_network_security_group.sg.id  
 
   ip_configuration {
-    name                          = "${var.net-name}-client"
+    name                          = "${var.net-name}-client-${count.index}"
     subnet_id                     = element(azurerm_subnet.subnet.*.id, 0)
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.fixedip-client.id
+    public_ip_address_id          = element(azurerm_public_ip.fixedip-client.*.id, count.index) 
   }
 }
 
@@ -78,7 +80,8 @@ data "azurerm_public_ip" "fixedip" {
 }
 
 data "azurerm_public_ip" "fixedip-client" {  
-  name                = azurerm_public_ip.fixedip-client.name
+  count               = var.node-count
+  name                = element(azurerm_public_ip.fixedip-client.*.name, count.index)
   zones               = [element(var.av_zone, 0)]
   resource_group_name = azurerm_resource_group.resource.name
   depends_on          = [ azurerm_virtual_machine.redis-client, azurerm_network_interface.nic-client ]
