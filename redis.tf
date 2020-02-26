@@ -52,7 +52,7 @@ module "redis_cluster-uswest2"  {
     re-download-url                 = var.re-download-url
     demodb-name                     = var.demodb-name
     node-size                       = var.node-size
-    ssh-allowip                     = var.ssh-allowipmodule.
+    ssh-allowip                     = var.ssh-allowip
 
     # Tags
     cost_center                     = var.cost_center
