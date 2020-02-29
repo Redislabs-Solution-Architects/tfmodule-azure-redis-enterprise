@@ -18,14 +18,14 @@ data_sovereignty_location       = "US"
 ssh-allowip                     = ["50.238.128.77/32", "35.138.147.194/32"]
 locations                       = [
                                     {
-                                        location                        = "eastus2"
+                                        location                        = "southcentralus"
                                         cluster-resource-group          = "azuse2-redis-test"    
                                         net-cidr                        = ["10.0.2.0/24"]      
                                         net-name                        = "redis-test-eastus2"    
                                         cluster-name                    = "redis-test-east"  
                                     },
                                     {
-                                        location                        = "westus2"
+                                        location                        = "westus"
                                         cluster-resource-group          = "azusw2-redis-test"    
                                         net-cidr                        = ["10.0.3.0/24"]      
                                         net-name                        = "redis-test-westus2"
