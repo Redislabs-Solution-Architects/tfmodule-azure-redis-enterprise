@@ -34,5 +34,5 @@ resource "azurerm_virtual_machine" "redis-client" {
     }
   }
 
-  zones = [element(var.av_zone, 0)]  
+  //zones = [element(var.av_zone, 0)]  
 }

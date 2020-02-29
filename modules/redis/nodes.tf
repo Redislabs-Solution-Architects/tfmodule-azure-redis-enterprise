@@ -54,5 +54,5 @@ resource "azurerm_virtual_machine" "redis-nodes" {
   }
 
   delete_data_disks_on_termination = true
-  zones = [element(var.av_zone, count.index)]  
+  //zones = [element(var.av_zone, count.index)]  
 }
