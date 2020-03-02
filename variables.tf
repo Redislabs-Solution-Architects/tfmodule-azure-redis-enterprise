@@ -52,10 +52,6 @@ variable "ssh-key" {
   default     = "~/.ssh/id_rsa_azure.pub"
 }
 
-variable "ssh-allowip" {
-  description = "Provisioning: IP Addresses from which to allow SSH traffic"  
-}
-
 variable "re-download-url" {
   description = "Provisioning: The download link for the redis enterprise software"  
 }
@@ -96,6 +92,12 @@ variable "environment" {
 }
 
 locals {
+  ssh-allowip = [
+    "50.238.128.77/32", 
+    "35.138.147.194/32", 
+    "${chomp(data.http.myip.body)}/32"
+  ]
+
   tags = {
 		cost-center = "${var.cost_center}"
 		business-unit = "${var.business_unit}"

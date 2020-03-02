@@ -1,3 +1,7 @@
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
 resource "azurerm_resource_group" "azuse2-devops-mgk-rg" {
   name     = "azuse2-devops-mgk"
   location = "eastus2"

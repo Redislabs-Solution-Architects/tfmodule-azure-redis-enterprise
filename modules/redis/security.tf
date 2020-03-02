@@ -1,8 +1,4 @@
 // Using the IP of the installer for security rules
-data "http" "myip" {
-  url = "http://ipv4.icanhazip.com"
-}
-
 resource "azurerm_network_security_group" "sg" {
   name                = var.net-name
   location            = var.location
@@ -28,7 +24,7 @@ resource "azurerm_network_security_group" "sg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = var.ssh-allowipterra
+    source_address_prefix      = var.ssh-allowip
     destination_address_prefix = "*"
   }
   
