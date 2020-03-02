@@ -24,5 +24,5 @@ resource "azurerm_sql_elasticpool" "mgk-sql-pool" {
   dtu                   = 50
   db_dtu_min            = 0
   db_dtu_max            = 2
-  pool_size             = 32
+  //pool_size             = 32
 }
