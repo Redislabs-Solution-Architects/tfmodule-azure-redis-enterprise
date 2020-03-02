@@ -28,7 +28,12 @@ resource "azurerm_network_security_group" "sg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
+<<<<<<< HEAD
     source_address_prefixes    = concat(var.ssh-allowip, ["${chomp(data.http.myip.body)}/32"])
+=======
+    //source_address_prefix      = concat(var.ssh-allowip, ["${chomp(data.http.myip.body)}/32"])
+    source_address_prefixes    = var.ssh-allowip
+>>>>>>> 9c28ee37bac11c87548e4637c8fe39e44c5c7c4f
     destination_address_prefix = "*"
   }
   

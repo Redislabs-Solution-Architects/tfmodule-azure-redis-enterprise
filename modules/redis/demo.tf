@@ -1,7 +1,7 @@
 locals {  
   create-license-json     = <<EOF
-  {
-    "license": "----- LICENSE START -----\nQ4KVocZjD3/FBc3Q8s8xMt6+aRmPsLyp4VV4uC6fNFvxLjc4bhaPJOVK8AeU\nV1G7QZJu0byxnDYMLbRQs3q3ptq9+IYiUrQxuhwfh8q/mhscbsEokNNMJKrH\nQBdr5w4YyzOJnT71OZ7wizxkCv0DO3FBQzONd+F3w84+Kg9yABrdTYVTzrXn\nVpDa5tCfJJ1Bf98hIqVeOAJTCdofvbYAh86H1TKN4wqi0y7NHs7xrwdYXeWf\nYbp2EHmpQ1kDPsc10uODcOWQweLXd+Mw00FhWOQVpzKbBjh1sfz5eyYMjCll\nMtV60Z4ecimA/i6Asclfj+56UP5dWMJ+HsU1VQZ/tw==\n----- LICENSE END -----"
+  {                
+    "license": "----- LICENSE START -----\nPotGVc85TIjp4/FlwK7AGRW/xDQebbV59lzhaN09FJsb6wqNheKGFs07mI7R\ncPJGx699VT/3H1gWefSTWEAxJJXVpOnO8qNPfPZFi4vS5LPBZ/7R2eF8GIkv\n86sAD7fQ7v1BSE0KanS6WxeGa9mXWoq77tCt0jAtV6CCpXps9wjbp/xPhjou\nZLYnyydtJaf5UCK/wXqHo9sez4KqEUm7wk/eorO62Ve1dLVdtcTq7DNHXeIA\nycTtR6VjODl/7OTZRZm1iKtPbjPFvlWAvvsbV8ptGsG6nuU8XBaD+d/QrVaN\nvqoaySdb+d614O69GEr4LnVBZyBfZtJe2Z6oTGO/eg==\n----- LICENSE END -----"
   }
   EOF
   create-demo-json        = <<EOF
