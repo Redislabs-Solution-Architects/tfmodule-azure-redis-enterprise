@@ -3,7 +3,7 @@ resource "azurerm_sql_server" "mgk-sql-server" {
   resource_group_name           = azurerm_resource_group.azuse2-devops-mgk-rg.name
   location                      = azurerm_resource_group.azuse2-devops-mgk-rg.location
   version                       = "12.0"
-  administrator_login           = "redis"
+  administrator_login           = "redislabs"
   administrator_login_password  = "EVENmoarSECURE!"
 }
 
