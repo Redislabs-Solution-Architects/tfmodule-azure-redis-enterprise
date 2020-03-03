@@ -9,7 +9,8 @@ locals {
 	  "name": "${var.demodb-name}",
 	  "type": "redis",
 	  "memory_size": 2000000000,
-	  "replication": true
+	  "replication": true,
+    "port": 12010
   }
   EOF
   create-license-script   = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'Content-Type: application/json' -X PUT  https://127.0.0.1:9443/v1/license -d '${jsonencode(jsondecode(replace(replace(local.create-license-json, "\r", ""),"\n","")))}'"     
