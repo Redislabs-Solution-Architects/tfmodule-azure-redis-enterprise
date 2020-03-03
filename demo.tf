@@ -44,6 +44,7 @@ locals {
   create-crdb-script = "curl -v -k -u ${var.username}:${var.password} --location-trusted -H 'Content-Type: application/json' -X POST https://localhost:9443/v1/crdbs -d '${jsonencode(jsondecode(replace(replace(local.create-crdb-json, "\r", ""),"\n","")))}'" 
 }
 
+/*
 resource "null_resource" "create-CRDB" {  
   provisioner "remote-exec" {
     connection {
@@ -59,5 +60,6 @@ resource "null_resource" "create-CRDB" {
 
   depends_on = [ azurerm_virtual_network_peering.peering-uswest2, azurerm_virtual_network_peering.peering-useast2, module.redis_cluster-useast2, module.redis_cluster-uswest2  ]
 }
+*/
 
 
