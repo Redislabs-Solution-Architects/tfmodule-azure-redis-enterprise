@@ -36,7 +36,7 @@ variable "net-cidr" {
 
 variable "subnet-count" {
   description = "Networking: The number of subnets to spin up"
-  default     = 2
+  default     = 1
 }
 
 variable "net-name" {

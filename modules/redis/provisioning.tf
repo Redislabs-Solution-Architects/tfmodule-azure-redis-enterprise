@@ -42,7 +42,7 @@ resource "null_resource" "remote-config-nodes" {
     inline = [ "set -x",
                local.install_step,
               //"${ local.other_node } rack_id rack-${ (count.index + 1) % length(var.av_zone) + 1  }",
-              "${ local.other_node } rack_id rack-0",
+              "${ local.other_node } rack_id rack-1",
               "/opt/redislabs/bin/rladmin node ${count.index + 2} external_addr set ${element(data.azurerm_public_ip.fixedip.*.ip_address, count.index + 1)}" ]
   }
   depends_on = [ null_resource.remote-config ]
