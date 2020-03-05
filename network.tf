@@ -2,12 +2,6 @@ data "http" "myip" {
   url = "http://ipv4.icanhazip.com"
 }
 
-resource "azurerm_resource_group" "azuse2-devops-mgk-rg" {
-  name     = "azuse2-devops-mgk"
-  location = "eastus2"
-  tags     = local.tags
-}
-
 resource "azurerm_virtual_network_peering" "peering-useast2" {  
   name                          = "peering-to-${element(var.locations, 1).net-name}"
   resource_group_name           = element(var.locations, 0).cluster-resource-group
