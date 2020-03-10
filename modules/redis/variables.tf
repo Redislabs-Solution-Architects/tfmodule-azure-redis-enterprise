@@ -143,6 +143,7 @@ variable "environment" {
 }
 
 variable "client-count" {    
+    description = "Provisioning: Number of Test Clients"
     type    = string	
     default = 2
 }
