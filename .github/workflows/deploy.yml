@@ -15,11 +15,10 @@ jobs:
       shell: bash
       env:
         STATE_ACCESS_KEY: ${{ secrets.state_access_key }}  
-        AZ_USER: ${{ secrets.az_user }}
-        AZ_PASS: ${{ secrets.az_pass }}
-        AZ_TENNANT: ${{ secrets.az_tennant }}
-      run: az login --service-principal -u $AZ_USER -p $AZ_PASS --tenant $AZ_TENNANT
-
+        ARM_CLIENT_ID: ${{ secrets.az_user }}
+        ARM_CLIENT_SECRET: ${{ secrets.az_pass }}
+        ARM_TENANT_ID: ${{ secrets.az_tennant }}
+      run: az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
     
     - name: Terraform Init
       shell: bash
