@@ -36,8 +36,7 @@ resource "azurerm_network_interface" "nic" {
   count                     = var.node-count
   name                      = "${var.net-name}-${count.index}"
   location                  = var.location
-  resource_group_name       = azurerm_resource_group.resource.name
-  network_security_group_id = azurerm_network_security_group.sg.id  
+  resource_group_name       = azurerm_resource_group.resource.name  
 
   ip_configuration {
     name                          = "${var.net-name}-${count.index}"
@@ -45,6 +44,12 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = element(azurerm_public_ip.fixedip.*.id, count.index)
   }
+}
+
+resource "azurerm_network_interface_security_group_association" "nic_sg" {
+  count                     = var.node-count
+  network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index).id
+  network_security_group_id = azurerm_network_security_group.sg.id  
 }
 
 resource "azurerm_public_ip" "fixedip-client" {  
@@ -61,7 +66,6 @@ resource "azurerm_network_interface" "nic-client" {
   name                      = "${var.net-name}-client-${count.index}"
   location                  = var.location
   resource_group_name       = azurerm_resource_group.resource.name
-  network_security_group_id = azurerm_network_security_group.sg.id  
 
   ip_configuration {
     name                          = "${var.net-name}-client-${count.index}"
@@ -69,6 +73,12 @@ resource "azurerm_network_interface" "nic-client" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = element(azurerm_public_ip.fixedip-client.*.id, count.index) 
   }
+}
+
+resource "azurerm_network_interface_security_group_association" "nic-client_sg" {
+  count                     = var.node-count
+  network_interface_id      = element(azurerm_network_interface.nic-client.*.id, count.index).id
+  network_security_group_id = azurerm_network_security_group.sg.id  
 }
 
 data "azurerm_public_ip" "fixedip" {
