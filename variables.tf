@@ -1,3 +1,7 @@
+variable "client_secret" {
+  description = "Identity: AZ Service Principal"  
+}
+
 variable locations {
   description = "Identity: A list of locations to install clusters and some details to facilitate the install"  
 }

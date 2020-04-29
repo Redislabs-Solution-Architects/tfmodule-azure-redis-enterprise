@@ -1,6 +1,7 @@
 # redis-enterprise-azure-terraform
 
 ![](https://github.com/mkaiserincomm/terraform-azure/workflows/Validate%20Terraform%20Script/badge.svg)
+![](https://github.com/mkaiserincomm/terraform-azure/workflows/Deploy%20Terraform%20Script/badge.svg)
 
 Public Azure Instance setup
 
