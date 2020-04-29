@@ -6,6 +6,7 @@ password                        = "EVENmoarSECURE"
 re-download-url                 = "https://s3.amazonaws.com/redis-enterprise-software-downloads/5.4.10/redislabs-5.4.10-22-rhel7-x86_64.tar"
 demodb-name                     = "first-db"
 cluster-base-resource-group     = "azuse-kaiserguru-dns-rg-prod"
+node-count                      = 1
 
 # Tags
 cost_center                     = "57601"
