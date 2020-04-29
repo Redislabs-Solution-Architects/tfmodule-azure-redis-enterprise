@@ -1,0 +1,15 @@
+name: Validate Terraform Script
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Terraform Init
+      run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=access_key=${{state_access_key}}" -backend-config="key=access_key=${{state_key}}"
+    - name: Terraform Validate
+      run: terraform validate

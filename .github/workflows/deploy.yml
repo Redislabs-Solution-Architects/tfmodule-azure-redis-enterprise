@@ -1,0 +1,15 @@
+name: Deploy Terraform Script
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Terraform Init
+      run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=${{state_access_key}}" -backend-config="key=${{state_key}}"
+    - name: Terraform Plan
+      run: terraform plan --parallelism=20 
