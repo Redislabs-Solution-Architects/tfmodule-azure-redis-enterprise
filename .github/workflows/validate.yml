@@ -10,6 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Terraform Init
-      run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=access_key=${{state_access_key}}" -backend-config="key=access_key=${{state_key}}"
+      env:
+        STATE_ACCESS_KEY: ${{state_access_key}}  
+        STATE_KEY: ${{state_key}}
+      run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=$STATE_ACCESS_KEY" -backend-config="key=$STATE_KEY"
     - name: Terraform Validate
       run: terraform validate
