@@ -1,5 +1,7 @@
 # redis-enterprise-azure-terraform
 
+![](https://github.com/mkaiserincomm/terraform-azure/workflows/Validate%20Terraform%20Script/badge.svg)
+
 Public Azure Instance setup
 
 Use this to quickly set up a Redis Enterprise environment on Microsoft Azure.

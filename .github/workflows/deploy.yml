@@ -10,12 +10,14 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+    
     - name: Terraform Init
       shell: bash
       env:
         STATE_ACCESS_KEY: ${{ secrets.state_access_key }}  
         STATE_KEY: ${{ secrets.state_key }}
       run: terraform init -backend-config="storage_account_name=azuse2devopsstore" -backend-config="container_name=tfstate" -backend-config="access_key=$STATE_ACCESS_KEY" -backend-config="key=$STATE_KEY"
+    
     - name: Terraform Plan
       shell: bash
       run: terraform plan --parallelism=20 
