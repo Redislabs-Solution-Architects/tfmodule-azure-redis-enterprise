@@ -11,10 +11,15 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Log into Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.azure_credentials }}
+    - name: Terraform Init
+      shell: bash
+      env:
+        STATE_ACCESS_KEY: ${{ secrets.state_access_key }}  
+        AZ_USER: ${{ secrets.az_user }}
+        AZ_PASS: ${{ secrets.az_pass }}
+        AZ_TENNANT: ${{ secrets.az_tennant }}
+      run: az login --service-principal -u $AZ_USER -p $AZ_PASS --tenant $AZ_TENNANT
+
     
     - name: Terraform Init
       shell: bash
