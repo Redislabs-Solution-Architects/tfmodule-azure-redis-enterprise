@@ -10,7 +10,7 @@ variable av_zone {
 
 variable "net-cidr" {
   description = "The CIDR blocks to be used in the network"
-  type        = "list"
+  type        = list
   default     = ["10.0.1.0/24"]
 }
 
@@ -87,7 +87,7 @@ variable "node-count" {
 
 variable "common-tags" {
   description = "A map of the tags to use for the resources that are deployed"
-  type        = "map"
+  type        = map
 
   default = {
     config = "terraform"
