@@ -1,13 +1,13 @@
 resource "azurerm_virtual_machine" "redis-nodes" {
   count                 = var.node-count
-  name                  = "${var.net-name}-${count.index}"
+  name                  = "${local.net-name}-${count.index}"
   location              = var.location
   resource_group_name   = azurerm_resource_group.resource.name
   network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index)}"]
   vm_size               = var.node-size
 
   storage_os_disk {
-    name              = "${var.net-name}-${count.index}"
+    name              = "${local.net-name}-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
@@ -22,7 +22,7 @@ resource "azurerm_virtual_machine" "redis-nodes" {
   }
 
   os_profile {
-    computer_name  = "${var.net-name}-${count.index}"
+    computer_name  = "${local.net-name}-${count.index}"
     admin_username = var.ssh-user
   }
 
@@ -36,24 +36,24 @@ resource "azurerm_virtual_machine" "redis-nodes" {
 
   # TODO: Make the number and size of data disks configurable
   storage_data_disk {
-      name                = "${var.net-name}-data-a-${count.index}"
-      caching             = "ReadWrite"
-      create_option       = "Empty"
-      managed_disk_type   = "Premium_LRS"
-      lun                 = 0
-      disk_size_gb        = "256"
+    name              = "${local.net-name}-data-a-${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "Empty"
+    managed_disk_type = "Premium_LRS"
+    lun               = 0
+    disk_size_gb      = "256"
   }
 
   storage_data_disk {
-      name                = "${var.net-name}-data-b-${count.index}"
-      caching             = "ReadWrite"
-      create_option       = "Empty"
-      managed_disk_type   = "Premium_LRS"
-      lun                 = 1
-      disk_size_gb        = "256"
+    name              = "${local.net-name}-data-b-${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "Empty"
+    managed_disk_type = "Premium_LRS"
+    lun               = 1
+    disk_size_gb      = "256"
   }
 
   delete_data_disks_on_termination = true
-  zones = [element(var.av_zone, count.index)]
-  tags = merge({ Name = "${var.net-name}-${count.index}" }, var.common-tags)
+  zones                            = [element(var.av_zone, count.index)]
+  tags                             = merge({ Name = "${local.net-name}-${count.index}" }, var.common-tags)
 }

@@ -4,7 +4,7 @@ data "http" "myip" {
 }
 
 resource "azurerm_network_security_group" "sg" {
-  name                = var.net-name
+  name                = local.net-name
   location            = var.location
   resource_group_name = azurerm_resource_group.resource.name
 
@@ -93,6 +93,6 @@ resource "azurerm_network_security_group" "sg" {
     destination_address_prefix = "*"
   }
 
-  tags = merge({ Name = "${var.net-name}" }, var.common-tags)
+  tags = merge({ Name = "${local.net-name}" }, var.common-tags)
 
 }

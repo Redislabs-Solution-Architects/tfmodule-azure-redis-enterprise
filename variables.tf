@@ -1,11 +1,11 @@
 variable "location" {
   description = "The location where resources will be created"
-  default = "west2us"
+  default     = "west2us"
 }
 
 variable av_zone {
   description = "A list of availability zones to use. Make sure they're valid for this location."
-  default = ["1","2"]
+  default     = ["1", "2"]
 }
 
 variable "net-cidr" {
@@ -16,6 +16,7 @@ variable "net-cidr" {
 
 variable "net-name" {
   description = "The name to be associated with the network"
+  default     = null
 }
 
 variable "cluster-name" {
@@ -24,11 +25,12 @@ variable "cluster-name" {
 
 variable "cluster-base-domain" {
   description = "A base domain name you own. Helpful if it's managed by a zone file in Azure."
-  default = "azure.redis.life"
+  default     = "azure.redis.life"
 }
 
 variable "cluster-base-resource-group" {
   description = "The resource group that contains the zone file for the cluster-base-domain."
+  default     = null
 }
 
 variable "node-size" {
