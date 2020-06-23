@@ -20,6 +20,7 @@ Public Azure Instance and Network setup
 module "azure-redis-enterprise" {
   source       = "git@github.com:Redislabs-Solution-Architects/tfmodule-azure-redis-enterprise.git"
   cluster-name = "terraform-test-1.azure.example.com"
+  location     = "uswest2"
   common-tags = {
     Owner       = "Ken_Watanabe@example.com",
     Config      = "terraform",

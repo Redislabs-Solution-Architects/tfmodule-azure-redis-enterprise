@@ -1,6 +1,6 @@
 variable "location" {
   description = "The location where resources will be created"
-  default     = "west2us"
+  default     = null
 }
 
 variable av_zone {
