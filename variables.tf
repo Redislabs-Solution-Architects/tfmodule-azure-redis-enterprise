@@ -61,7 +61,7 @@ variable "node-version" {
 
 variable "subnet-count" {
   description = "The number of subnets to spin up"
-  default     = 2
+  default     = null
 }
 
 variable "node-count" {

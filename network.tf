@@ -13,11 +13,11 @@ resource "azurerm_virtual_network" "network" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  count                = var.subnet-count
+  count                = local.subnet-count
   name                 = "${local.net-name}-subnet-${count.index}"
   resource_group_name  = azurerm_resource_group.resource.name
   virtual_network_name = azurerm_virtual_network.network.name
-  address_prefix       = cidrsubnet(var.net-cidr[0], tostring(var.subnet-count), tostring(count.index))
+  address_prefixes     = [cidrsubnet(var.net-cidr[0], tostring(local.subnet-count), tostring(count.index))]
 }
 
 resource "azurerm_public_ip" "fixedip" {
@@ -31,12 +31,11 @@ resource "azurerm_public_ip" "fixedip" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  count                     = var.node-count
-  name                      = "${local.net-name}-${count.index}"
-  location                  = var.location
-  resource_group_name       = azurerm_resource_group.resource.name
-  network_security_group_id = azurerm_network_security_group.sg.id
-  tags                      = merge({ Name = "${local.net-name}" }, var.common-tags)
+  count               = var.node-count
+  name                = "${local.net-name}-${count.index}"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.resource.name
+  tags                = merge({ Name = "${local.net-name}" }, var.common-tags)
 
   ip_configuration {
     name                          = "${local.net-name}-${count.index}"
