@@ -26,7 +26,8 @@ resource "azurerm_public_ip" "fixedip" {
   location            = var.location
   zones               = [element(var.av_zone, count.index)]
   resource_group_name = azurerm_resource_group.resource.name
-  allocation_method   = "Dynamic"
+  sku                 = "Standard"
+  allocation_method   = "Static"
   tags                = merge({ Name = "${local.net-name}-${count.index}" }, var.common-tags)
 }
 
