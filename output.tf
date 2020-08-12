@@ -7,5 +7,5 @@ output "ui-links" {
 }
 
 output "node-external-ips" {
-  value = [azurerm_public_ip.fixedip.*.ip_address]
+  value = azurerm_public_ip.fixedip.*.ip_address
 }
