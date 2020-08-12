@@ -84,6 +84,11 @@ variable "ssh-key" {
   default     = "~/.ssh/id_rsa_azure.pub"
 }
 
+variable "accelerated-networking" {
+  description = "Enable Accelerated networking"
+  default     = false
+}
+
 # Use this to determine what version of the software gets installed
 variable "re-download-url" {
   description = "The download link for the redis enterprise software"

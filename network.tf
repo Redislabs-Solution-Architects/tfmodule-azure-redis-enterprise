@@ -33,6 +33,7 @@ resource "azurerm_public_ip" "fixedip" {
 
 resource "azurerm_network_interface" "nic" {
   count               = var.node-count
+  enable_accelerated_networking = var.accelerated-networking
   name                = "${local.net-name}-${count.index}"
   location            = var.location
   resource_group_name = azurerm_resource_group.resource.name
@@ -45,6 +46,13 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id          = element(azurerm_public_ip.fixedip.*.id, count.index)
   }
 }
+
+resource "azurerm_network_interface_security_group_association" "sg2nic" {
+  count                     = var.node-count
+  network_interface_id      = element(azurerm_network_interface.nic.*.id, count.index)
+  network_security_group_id = azurerm_network_security_group.sg.id
+}
+
 
 data "azurerm_public_ip" "fixedip" {
   count               = var.node-count
