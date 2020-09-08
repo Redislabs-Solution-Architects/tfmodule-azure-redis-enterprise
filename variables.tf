@@ -94,3 +94,15 @@ variable "re-download-url" {
   description = "The download link for the redis enterprise software"
   default     = null
 }
+
+variable "allow-public-ssh" {
+  description = "Allow SSH to be open to the public - disabled by default"
+  default     = "0"
+}
+
+variable "open-nets" {
+  type        = list
+  description = "CIDRs that will have access to everything"
+  default     = []
+}
+

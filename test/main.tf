@@ -2,9 +2,11 @@ provider "azurerm" {
 }
 
 module "azure" {
-  source       = "../"
-  location     = "us2west" # broken on purpose so you can't create resoruces
-  cluster-name = "terraform-test-1.azure.example.com"
+  source           = "../"
+  location         = "us2west" # broken on purpose so you can't create resoruces
+  cluster-name     = "terraform-test-1.azure.example.com"
+  allow-public-ssh = 1
+  open-nets        = ["10.0.0.12/32"]
   common-tags = {
     Owner       = "Ken_Watanabe@example.com",
     Config      = "terraform",
