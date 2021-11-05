@@ -32,12 +32,12 @@ resource "azurerm_public_ip" "fixedip" {
 }
 
 resource "azurerm_network_interface" "nic" {
-  count               = var.node-count
+  count                         = var.node-count
   enable_accelerated_networking = var.accelerated-networking
-  name                = "${local.net-name}-${count.index}"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.resource.name
-  tags                = merge({ Name = "${local.net-name}" }, var.common-tags)
+  name                          = "${local.net-name}-${count.index}"
+  location                      = var.location
+  resource_group_name           = azurerm_resource_group.resource.name
+  tags                          = merge({ Name = "${local.net-name}" }, var.common-tags)
 
   ip_configuration {
     name                          = "${local.net-name}-${count.index}"
@@ -56,8 +56,8 @@ resource "azurerm_network_interface_security_group_association" "sg2nic" {
 
 data "azurerm_public_ip" "fixedip" {
   count               = var.node-count
-  name                = "${element(azurerm_public_ip.fixedip.*.name, count.index)}"
+  name                = element(azurerm_public_ip.fixedip.*.name, count.index)
   zones               = [element(var.av_zone, count.index)]
-  resource_group_name = "${azurerm_resource_group.resource.name}"
+  resource_group_name = azurerm_resource_group.resource.name
   depends_on          = [azurerm_virtual_machine.redis-nodes, azurerm_network_interface.nic]
 }

@@ -113,13 +113,13 @@ resource "azurerm_network_security_rule" "public-ssh" {
 resource "azurerm_network_security_rule" "open-nets" {
   count                       = length(var.open-nets)
   name                        = "Open-Net-${count.index}"
-  priority                    = "${format("%02d", count.index+3000)}"
+  priority                    = format("%02d", count.index + 3000)
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "${element(var.open-nets, count.index)}"
+  source_address_prefix       = element(var.open-nets, count.index)
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.resource.name
   network_security_group_name = azurerm_network_security_group.sg.name
