@@ -24,7 +24,7 @@ resource "azurerm_public_ip" "fixedip" {
   count               = var.node-count
   name                = "${local.net-name}-${count.index}"
   location            = var.location
-  zones               = [element(var.av_zone, count.index)]
+  availability_zone   = element(var.av_zone, count.index)
   resource_group_name = azurerm_resource_group.resource.name
   sku                 = "Standard"
   allocation_method   = "Static"
@@ -57,7 +57,6 @@ resource "azurerm_network_interface_security_group_association" "sg2nic" {
 data "azurerm_public_ip" "fixedip" {
   count               = var.node-count
   name                = element(azurerm_public_ip.fixedip.*.name, count.index)
-  zones               = [element(var.av_zone, count.index)]
   resource_group_name = azurerm_resource_group.resource.name
   depends_on          = [azurerm_virtual_machine.redis-nodes, azurerm_network_interface.nic]
 }
