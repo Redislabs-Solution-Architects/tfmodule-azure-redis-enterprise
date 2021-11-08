@@ -3,14 +3,14 @@ variable "location" {
   default     = null
 }
 
-variable av_zone {
+variable "av_zone" {
   description = "A list of availability zones to use. Make sure they're valid for this location."
   default     = ["1", "2"]
 }
 
 variable "net-cidr" {
   description = "The CIDR blocks to be used in the network"
-  type        = list
+  type        = list(any)
   default     = ["10.0.11.0/24"]
 }
 
@@ -51,7 +51,7 @@ variable "node-offer" {
 
 variable "node-sku" {
   description = "The SKU of the image"
-  default     = "7-RAW"
+  default     = "7.7"
 }
 
 variable "node-version" {
@@ -71,7 +71,7 @@ variable "node-count" {
 
 variable "common-tags" {
   description = "A map of the tags to use for the resources that are deployed"
-  type        = map
+  type        = map(any)
 }
 
 variable "ssh-user" {
@@ -101,7 +101,7 @@ variable "allow-public-ssh" {
 }
 
 variable "open-nets" {
-  type        = list
+  type        = list(any)
   description = "CIDRs that will have access to everything"
   default     = []
 }
